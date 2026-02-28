@@ -1,74 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Roblox Codes</title>
-    <style>
-        /* This CSS makes it look like a gaming site */
-        body { background-color: #1b1d1f; color: white; font-family: sans-serif; margin: 0; }
-        header { background: #2b2e31; padding: 20px; text-align: center; border-bottom: 3px solid #00aeff; }
-        .container { display: flex; padding: 20px; }
-        
-        /* Sidebar Navigation */
-        nav { width: 200px; background: #25282a; padding: 15px; border-radius: 8px; height: fit-content; }
-        nav a { display: block; color: #bbb; text-decoration: none; padding: 10px; margin-bottom: 5px; border-radius: 4px; }
-        nav a:hover { background: #3a3e42; color: white; }
-        nav a.active { background: #00aeff; color: white; }
+<style>
+    /* 1. DARK SPACE BACKGROUND WITH STARS */
+    body { 
+        background-color: #050505; 
+        background-image: 
+            radial-gradient(white, rgba(255,255,255,.2) 1px, transparent 20px),
+            radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+        background-size: 550px 550px, 350px 350px; 
+        background-position: 0 0, 40px 60px;
+        color: white; 
+        font-family: 'Segoe UI', sans-serif; 
+        margin: 0; 
+    }
 
-        /* This targets your buttons or code cards */
-.copy-btn, .code-card, .nav-link {
-    display: inline-block;
-    transition: all 0.3s ease; /* This handles the smooth 'tween' animation */
-    cursor: pointer;
-    border: 1px solid #00aeff; /* Matches the Roblox blue theme */
-}
+    /* 2. PURPLE SUBTHEME */
+    header { 
+        background: rgba(35, 15, 60, 0.8); 
+        padding: 30px; 
+        text-align: center; 
+        border-bottom: 3px solid #a020f0; /* Purple border */
+        box-shadow: 0 0 20px rgba(160, 32, 240, 0.5);
+    }
+    
+    .container { display: flex; padding: 20px; gap: 20px; }
+    
+    /* Nav Links with Purple Glow */
+    nav { width: 200px; background: #1a0b2e; padding: 15px; border-radius: 12px; height: fit-content; border: 1px solid #4b0082; }
+    nav a { 
+        display: block; color: #d8b4fe; text-decoration: none; padding: 12px; margin-bottom: 8px; 
+        border-radius: 6px; transition: all 0.4s ease; 
+    }
+    nav a:hover { 
+        background: #4b0082; 
+        color: white; 
+        transform: translateY(-5px); 
+        box-shadow: 0 0 15px #a020f0; 
+    }
 
-/* The Hover Effect */
-.copy-btn:hover, .code-card:hover, .nav-link:hover {
-    transform: translateY(-8px); /* Moves the button UPWARDS */
-    box-shadow: 0px 10px 20px rgba(0, 174, 255, 0.4); /* Faint blue GLOW */
-    background-color: #00aeff; /* Optional: fills button with color on hover */
-    color: white;
-}
+    /* 3. BUTTONS TWEENING UPWARDS WITH GLOW */
+    .code-card { 
+        background: #1a0b2e; 
+        padding: 20px; 
+        margin-bottom: 20px; 
+        border-radius: 12px; 
+        border-left: 5px solid #a020f0; 
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* The Tween */
+        border: 1px solid #331a4d;
+    }
 
+    /* Hover effect fix: This must be separate and specific */
+    .code-card:hover {
+        transform: translateY(-12px) !important; /* Moves UPWARDS */
+        box-shadow: 0 10px 30px rgba(160, 32, 240, 0.6); /* Purple GLOW */
+        border-color: #a020f0;
+    }
 
-        /* Content Area */
-        main { flex-grow: 1; margin-left: 20px; }
-        .code-card { background: #25282a; padding: 15px; margin-bottom: 15px; border-radius: 8px; border-left: 5px solid #00aeff; }
-        .code-title { color: #00aeff; font-weight: bold; font-size: 1.2em; }
-        .code-box { background: #111; padding: 10px; font-family: monospace; color: #00ff00; margin-top: 10px; border-radius: 4px; }
-    </style>
-</head>
-<body>
+    .code-title { color: #d8b4fe; font-weight: bold; font-size: 1.4em; margin-bottom: 10px; }
+    .code-box { background: #000; padding: 12px; font-family: monospace; color: #c084fc; border-radius: 6px; border: 1px solid #4b0082; }
+    
+    main { flex-grow: 1; }
+</style>
 
-<header>
-    <h1>🎮 My Roblox Game Codes</h1>
-</header>
-
-<div class="container">
-    <nav>
-        <a href="#home" class="active">Home</a>
-        <a href="#codes">Active Codes</a>
-        <a href="#expired">Expired</a>
-    </nav>
-
-    <main id="codes">
-        <h2>Active Promo Codes</h2>
-        
-        <div class="code-card">
-            <div class="code-title">Blox Fruits</div>
-            <p>Reward: 20 Minutes of 2x Experience</p>
-            <div class="code-box">KITT_RESET</div>
-        </div>
-
-        <div class="code-card">
-            <div class="code-title">Pet Simulator 99</div>
-            <p>Reward: Free Huge Pet</p>
-            <div class="code-box">UPDATE_SOON</div>
-        </div>
-    </main>
-</div>
-
-</body>
 </html>
