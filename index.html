@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Codes | Starry Edition</title>
+    <title>My Portfolio | Navy Space Edition</title>
     <style>
-        /* 1. STARRY BLACK BACKGROUND */
+        /* 1. STARRY SPACE BACKGROUND */
+        html { scroll-behavior: smooth; }
         body { 
             background-color: #050505; 
             background-image: 
@@ -13,114 +14,123 @@
                 radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
             background-size: 550px 550px, 350px 350px; 
             background-position: 0 0, 40px 60px;
-            color: white; 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            margin: 0; 
-            min-height: 100vh;
+            color: white; font-family: 'Segoe UI', sans-serif; margin: 0; 
         }
 
-        /* 2. PURPLE SUBTHEME HEADER */
+        /* 2. TOP NAV BAR (#020616) WITH NAVY ACCENTS */
         header { 
-            background: rgba(26, 11, 46, 0.9); 
-            padding: 40px; 
-            text-align: center; 
-            border-bottom: 3px solid #a020f0; 
-            box-shadow: 0 0 30px rgba(160, 32, 240, 0.4);
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: #020616; /* Your specific hex */
+            border-bottom: 2px solid #000080; /* Navy accent border */
+            box-shadow: 0 0 20px rgba(0, 0, 128, 0.5); /* Navy glow */
         }
-        
-        .container { display: flex; padding: 30px; gap: 30px; max-width: 1200px; margin: auto; }
-        
-        /* 3. SIDEBAR WITH TWEENS */
-        nav { width: 220px; background: #1a0b2e; padding: 20px; border-radius: 15px; height: fit-content; border: 1px solid #4b0082; }
+        nav { display: flex; justify-content: center; padding: 20px; gap: 40px; }
         nav a { 
-            display: block; color: #d8b4fe; text-decoration: none; padding: 15px; margin-bottom: 10px; 
-            border-radius: 8px; transition: all 0.3s ease; 
+            color: #93c5fd; text-decoration: none; font-weight: bold; 
+            font-size: 1.1em; transition: all 0.3s ease; 
         }
         nav a:hover { 
-            background: #4b0082; 
             color: white; 
-            transform: translateY(-5px); /* Tween Up */
-            box-shadow: 0 0 15px #a020f0; 
+            text-shadow: 0 0 10px #1e3a8a; /* Navy text glow */
+            transform: translateY(-3px); 
         }
 
-        /* 4. CONTENT & GLOWING BUTTONS */
-        main { flex-grow: 1; }
-        .code-card { 
-            background: rgba(26, 11, 46, 0.8); 
-            padding: 25px; 
-            margin-bottom: 25px; 
-            border-radius: 15px; 
-            border: 1px solid #4b0082;
-            border-left: 6px solid #a020f0;
-            transition: all 0.3s ease; /* The Tween */
-        }
+        /* 3. SECTION STYLING */
+        section { min-height: 100vh; padding: 120px 50px 50px; box-sizing: border-box; }
+        h2 { color: #1e40af; text-align: center; font-size: 2.5em; margin-bottom: 40px; }
 
-        /* This makes the whole card tween up and glow on hover */
-        .code-card:hover {
-            transform: translateY(-10px); 
-            box-shadow: 0 15px 40px rgba(160, 32, 240, 0.5);
-            border-color: #a020f0;
-        }
-
-        .code-title { color: #d8b4fe; font-weight: bold; font-size: 1.5em; margin-bottom: 10px; }
+        /* 4. CARDS (WORK & VIDEO) */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: auto; }
         
-        .code-row { display: flex; align-items: center; gap: 15px; margin-top: 15px; }
-        .code-box { 
-            background: #000; padding: 15px; font-family: monospace; color: #c084fc; 
-            border-radius: 8px; flex-grow: 1; border: 1px solid #4b0082; font-size: 1.2em;
+        .card { 
+            background: rgba(2, 6, 22, 0.8); border: 1px solid #1e3a8a;
+            border-radius: 15px; overflow: hidden; position: relative;
+            transition: all 0.4s ease; cursor: pointer; text-decoration: none; color: inherit;
+        }
+        /* Tween upwards + Navy Glow */
+        .card:hover { 
+            transform: translateY(-15px); 
+            box-shadow: 0 15px 40px rgba(0, 0, 128, 0.6); 
+            border-color: #3b82f6;
         }
 
-        .copy-btn {
-            background: #a020f0; border: none; color: white; padding: 12px 25px; 
-            border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s;
+        .card img, .card video { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #1e3a8a; }
+        .card-info { padding: 20px; text-align: center; }
+        
+        /* HOVER DESCRIPTION FOR WORK SECTION */
+        .work-desc { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 128, 0.9); /* Navy Overlay */
+            display: flex; align-items: center; justify-content: center; 
+            padding: 20px; text-align: center; opacity: 0; 
+            transition: opacity 0.4s ease; box-sizing: border-box;
         }
-        .copy-btn:hover { background: #bf40ff; box-shadow: 0 0 15px #a020f0; }
+        .card:hover .work-desc { opacity: 1; }
+
+        /* CONTACT SECTION */
+        #contact div { 
+            background: rgba(2, 6, 22, 0.8); max-width: 600px; margin: auto; 
+            padding: 30px; border-radius: 15px; border: 1px solid #1e3a8a;
+            text-align: center; font-size: 1.2em; line-height: 2; 
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🌌 ROBLOX CODES: SPACE EDITION</h1>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#video">Video</a>
+        <a href="#contact">Contact</a>
+    </nav>
 </header>
 
-<div class="container">
-    <nav>
-        <a href="#" style="background: #a020f0; color: white;">All Games</a>
-        <a href="#">Blox Fruits</a>
-        <a href="#">Pet Sim 99</a>
-    </nav>
+<!-- ABOUT SECTION -->
+<section id="about">
+    <h2>About Me</h2>
+    <div style="max-width: 800px; margin: auto; text-align: center; font-size: 1.3em;">
+        <p>I am a developer specializing in Roblox experiences and interactive media. This is where you land first!</p>
+    </div>
+</section>
 
-    <main>
-        <div class="code-card">
-            <div class="code-title">Blox Fruits</div>
-            <p style="color: #bbb;">Reward: 20 Minutes of 2x Experience</p>
-            <div class="code-row">
-                <div class="code-box" id="c1">KITT_RESET</div>
-                <button class="copy-btn" onclick="copyCode('c1', this)">COPY</button>
+<!-- WORK SECTION -->
+<section id="work">
+    <h2>Work</h2>
+    <div class="grid">
+        <a href="https://www.roblox.com" target="_blank" class="card">
+            <img src="https://via.placeholder.com" alt="Sword Game">
+            <div class="card-info"><h3>Sword Game</h3></div>
+            <div class="work-desc">
+                <p>Click to play! An epic combat simulator with custom physics.</p>
             </div>
-        </div>
+        </a>
+    </div>
+</section>
 
-        <div class="code-card">
-            <div class="code-title">Pet Simulator 99</div>
-            <p style="color: #bbb;">Reward: Free Huge Pet</p>
-            <div class="code-row">
-                <div class="code-box" id="c2">UPDATE_SOON</div>
-                <button class="copy-btn" onclick="copyCode('c2', this)">COPY</button>
-            </div>
+<!-- VIDEO SECTION -->
+<section id="video">
+    <h2>Video</h2>
+    <div class="grid">
+        <div class="card">
+            <div class="card-info"><h3>Gameplay Trailer</h3></div>
+            <video controls>
+                <source src="your-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
-    </main>
-</div>
+    </div>
+</section>
 
-<script>
-    function copyCode(id, btn) {
-        const text = document.getElementById(id).innerText;
-        navigator.clipboard.writeText(text);
-        const old = btn.innerText;
-        btn.innerText = "DONE!";
-        setTimeout(() => btn.innerText = old, 1500);
-    }
-</script>
+<!-- CONTACT SECTION -->
+<section id="contact">
+    <h2>Contact & Payment</h2>
+    <div>
+        <p>📧 <strong>Email:</strong> yourname@example.com</p>
+        <p>🎮 <strong>Discord:</strong> YourUser#0000</p>
+        <p>💳 <strong>Payment:</strong> PayPal / Robux / Crypto</p>
+    </div>
+</section>
 
 </body>
 </html>
-
