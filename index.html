@@ -74,69 +74,84 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .inner-showcase-frame {
-            background: rgba(5, 5, 10, 0.8);
-            border: 1px solid rgba(239, 68, 68, 0.15);
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
-            margin-bottom: 30px;
-        }
-
-        /* 4. REVEAL ANIMATION */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* 5. BUTTONS & BADGES */
-        .discord-badge {
-            display: inline-flex; border-radius: 12px; overflow: hidden;
-            border: 1px solid rgba(239, 68, 68, 0.3); margin-top: 30px;
-        }
-        .discord-badge:hover { transform: translateY(-5px); border-color: #ef4444; }
-        .discord-label { background: #111; color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 8px; }
-        .discord-username { background: #ef4444; color: #fff; padding: 12px 20px; font-weight: 600; }
-
-        .contact-btn, .game-link-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            padding: 12px 25px; border-radius: 12px;
-            color: white; font-weight: 600; font-size: 1rem;
-            display: flex; align-items: center; gap: 10px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin: 15px 0 0 0; width: fit-content;
-            text-decoration: none;
-        }
-        .contact-btn:hover, .game-link-btn:hover { 
-            background: rgba(239, 68, 68, 0.1); 
-            border-color: #ef4444; transform: scale(1.05); 
-        }
-
-        .paypal-notice {
-            margin-top: 20px; color: #a1a1aa; font-size: 0.9rem;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-
-        /* 6. GRID & CONTENT */
+        /* 4. GAME CARD STYLING */
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 25px;
         }
 
+        .game-card {
+            background: rgba(5, 5, 10, 0.8);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+            text-decoration: none;
+            display: block;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(239, 68, 68, 0.6);
+            background: rgba(10, 10, 20, 0.9);
+            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.1), inset 0 0 20px rgba(0,0,0,0.4);
+        }
+
         .game-title {
             font-weight: 700; color: #ef4444; margin-bottom: 10px;
-            font-size: 1.4rem; display: block;
+            font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between;
         }
+
+        .game-title svg { opacity: 0.4; transition: 0.3s; }
+        .game-card:hover .game-title svg { opacity: 1; transform: translate(3px, -3px); }
 
         .game-desc {
-            color: #a1a1aa; line-height: 1.5; font-size: 0.95rem; margin-bottom: 15px;
+            color: #a1a1aa; line-height: 1.5; font-size: 0.95rem; margin: 0;
         }
 
+        /* 5. VIDEO & INNER FRAMES */
+        .inner-showcase-frame {
+            background: rgba(5, 5, 10, 0.8);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+        }
+
+        .video-container {
+            background: #000; border-radius: 15px; overflow: hidden;
+            border: 1px solid rgba(239, 68, 68, 0.1); position: relative;
+        }
+
+        /* 6. REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* 7. TYPEWRITER & UTILS */
         #typewriter {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800;
             color: #ef4444; border-right: 4px solid #ef4444; padding-right: 10px;
         }
+
+        .discord-badge {
+            display: inline-flex; border-radius: 12px; overflow: hidden;
+            border: 1px solid rgba(239, 68, 68, 0.3); margin-top: 30px; text-decoration: none;
+        }
+        .discord-label { background: #111; color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 8px; }
+        .discord-username { background: #ef4444; color: #fff; padding: 12px 20px; font-weight: 600; }
+
+        .contact-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 15px 30px; border-radius: 15px; color: white; font-weight: 600;
+            display: flex; align-items: center; gap: 12px; text-decoration: none;
+            transition: 0.3s; margin: 10px auto; width: fit-content;
+        }
+        .contact-btn:hover { background: rgba(239, 68, 68, 0.1); border-color: #ef4444; transform: scale(1.05); }
 
         @keyframes nebulaMove { from { transform: rotate(0deg) scale(1); } to { transform: rotate(5deg) scale(1.1); } }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
@@ -186,38 +201,35 @@
         <h2 class="section-title">Games</h2>
         <div class="section-frame">
             <div class="games-grid">
-                <div class="inner-showcase-frame">
-                    <span class="game-title">Persona Grounds</span>
+                
+                <a href="https://www.roblox.com/games/82318718780793/Persona-Grounds" target="_blank" class="game-card">
+                    <span class="game-title">Persona Grounds 
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </span>
                     <p class="game-desc">Turn-Based style fighting game based on the Persona JRPG series.</p>
-                    <a href="https://www.roblox.com/games/82318718780793/Persona-Grounds" target="_blank" class="game-link-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 19.74l10 2.26 10-2.26L12 2zm0 15.15l-4.5-1.02 4.5-8.1 4.5 8.1-4.5 1.02z"/></svg>
-                        Play Game
-                    </a>
-                </div>
-                <div class="inner-showcase-frame">
-                    <span class="game-title">The Interview</span>
+                </a>
+
+                <a href="https://www.roblox.com/games/12062510685/The-Interview" target="_blank" class="game-card">
+                    <span class="game-title">The Interview
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </span>
                     <p class="game-desc">Psychological horror experience that breaks the fourth wall.</p>
-                    <a href="https://www.roblox.com/games/12062510685/The-Interview" target="_blank" class="game-link-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 19.74l10 2.26 10-2.26L12 2zm0 15.15l-4.5-1.02 4.5-8.1 4.5 8.1-4.5 1.02z"/></svg>
-                        Play Game
-                    </a>
-                </div>
-                <div class="inner-showcase-frame">
-                    <span class="game-title">Battle of Blades</span>
+                </a>
+
+                <a href="https://www.roblox.com/games/106649717088998/Battle-of-Blades" target="_blank" class="game-card">
+                    <span class="game-title">Battle of Blades
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </span>
                     <p class="game-desc">Competitive first-person melee combat game currently in Alpha.</p>
-                    <a href="https://www.roblox.com/games/106649717088998/Battle-of-Blades" target="_blank" class="game-link-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 19.74l10 2.26 10-2.26L12 2zm0 15.15l-4.5-1.02 4.5-8.1 4.5 8.1-4.5 1.02z"/></svg>
-                        Play Game
-                    </a>
-                </div>
-                <div class="inner-showcase-frame">
-                    <span class="game-title">Art Simulator</span>
+                </a>
+
+                <a href="https://www.roblox.com/games/5998321931/Art-Simulator" target="_blank" class="game-card">
+                    <span class="game-title">Art Simulator
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </span>
                     <p class="game-desc">Creative simulator experience focused on building an art empire from your own tablet.</p>
-                    <a href="https://www.roblox.com/games/5998321931/Art-Simulator" target="_blank" class="game-link-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 19.74l10 2.26 10-2.26L12 2zm0 15.15l-4.5-1.02 4.5-8.1 4.5 8.1-4.5 1.02z"/></svg>
-                        Play Game
-                    </a>
-                </div>
+                </a>
+
             </div>
         </div>
     </div>
@@ -239,7 +251,7 @@
         <h2 class="section-title">Showcases</h2>
         <div class="section-frame">
             <div class="inner-showcase-frame">
-                <span class="video-title">Sword System Showcase</span>
+                <span class="video-title" style="font-weight: 600; color: #fff; margin-bottom: 20px; font-size: 1.4rem; display: block; text-align: center;">Sword System Showcase</span>
                 <div class="video-container">
                     <video controls style="width:100%; display:block; aspect-ratio:16/9;">
                         <source src="YOUR_VIDEO_FILE.mp4" type="video/mp4">
@@ -271,7 +283,6 @@
 </section>
 
 <script>
-    // 1. STAR GENERATOR
     function initStars() {
         const bg = document.getElementById('bg-container');
         for (let i = 0; i < 160; i++) {
@@ -296,7 +307,6 @@
         }
     }
 
-    // 2. TYPEWRITER
     const textSpan = document.getElementById('typewriter');
     const words = ["Hey, I'm Zylitee.", "I Script on Roblox.", "I'm a Roblox Developer."];
     let wIdx = 0, cIdx = 0, isDel = false;
@@ -309,7 +319,6 @@
         setTimeout(playTypewriter, speed);
     }
 
-    // 3. RE-TWEENING OBSERVER
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) e.target.classList.add('active');
