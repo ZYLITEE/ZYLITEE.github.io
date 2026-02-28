@@ -69,7 +69,7 @@
             background: rgba(15, 15, 25, 0.6);
             border: 1px solid rgba(239, 68, 68, 0.1);
             border-radius: 40px; padding: 40px;
-            margin: 0 auto; max-width: 1000px;
+            margin: 0 auto; max-width: 1100px;
             backdrop-filter: blur(15px);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
@@ -86,7 +86,38 @@
             max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;
         }
 
-        /* 5. SHOWCASE MODAL SYSTEM */
+        /* 5. GAME GRID */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: rgba(5, 5, 10, 0.8);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 25px;
+            padding: 30px;
+            text-decoration: none;
+            display: block;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: #ef4444;
+            background: rgba(15, 5, 5, 0.9);
+            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.1);
+        }
+
+        .game-title {
+            font-weight: 700; color: #ef4444; margin-bottom: 10px;
+            font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .game-desc { color: #a1a1aa; line-height: 1.5; font-size: 0.95rem; margin: 0; }
+
+        /* 6. MODAL & SHOWCASE BUTTONS */
         .showcase-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -105,16 +136,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            text-align: left;
         }
-        .showcase-btn:hover {
-            border-color: #ef4444;
-            background: rgba(239, 68, 68, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.1);
-        }
+        .showcase-btn:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); transform: translateY(-3px); }
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -124,32 +149,19 @@
         }
 
         .modal-content {
-            position: relative;
-            width: 90%;
-            max-width: 960px;
-            background: #020205;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 24px;
-            overflow: hidden;
+            position: relative; width: 90%; max-width: 960px;
+            background: #020205; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 24px; overflow: hidden;
         }
 
         .modal-header {
-            padding: 20px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(239, 68, 68, 0.1);
         }
 
-        .modal-title { font-weight: 700; color: #ef4444; font-size: 1.2rem; }
+        .close-modal { color: white; font-size: 28px; cursor: pointer; transition: 0.3s; }
+        .close-modal:hover { color: #ef4444; }
 
-        .close-modal {
-            color: white; font-size: 28px; cursor: pointer;
-            transition: 0.3s; line-height: 1;
-        }
-        .close-modal:hover { color: #ef4444; transform: rotate(90deg); }
-
-        /* 6. WORK TAGS */
+        /* 7. WORK TAGS (RESTORED BIG BLOCKS) */
         .work-tag {
             background: rgba(239, 68, 68, 0.05);
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -160,7 +172,7 @@
         }
         .work-tag:hover { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; transform: scale(1.05); }
 
-        /* 7. REVEAL */
+        /* 8. REVEAL & CONTACT */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -219,64 +231,43 @@
                     <span>Sword Showcase</span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="#ef4444"><path d="M8 5v14l11-7z"/></svg>
                 </button>
-                
                 <button class="showcase-btn" onclick="openModal('Trading System', '6X6XGf7O_80')">
                     <span>Trading System</span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="#ef4444"><path d="M8 5v14l11-7z"/></svg>
                 </button>
-
                 <button class="showcase-btn" onclick="openModal('Fishing System', '9Jp_A2L-7v8')">
                     <span>Fishing System</span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="#ef4444"><path d="M8 5v14l11-7z"/></svg>
                 </button>
-
-                <button class="showcase-btn" onclick="openModal('Abilities Showcase', 'f9z7Fj_9Wzg')">
-                    <span>Abilities System</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#ef4444"><path d="M8 5v14l11-7z"/></svg>
-                </button>
-
-                <button class="showcase-btn" onclick="openModal('Inventory UI/System', '3_Xf8G9H-vY')">
+                <button class="showcase-btn" onclick="openModal('Inventory System', '3_Xf8G9H-vY')">
                     <span>Inventory System</span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="#ef4444"><path d="M8 5v14l11-7z"/></svg>
-                </button>
-                
-                <button class="showcase-btn" onclick="window.open('https://www.youtube.com/channel/UCMhcANLKsFU6ih3TLNmbyuA', '_blank')">
-                    <span>View More on YouTube</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zM19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z"/></svg>
                 </button>
             </div>
         </div>
     </div>
 </section>
 
-<div class="modal-overlay" id="videoModal" onclick="closeModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <span class="modal-title" id="mTitle">Video Showcase</span>
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-        </div>
-        <div style="position: relative; padding-bottom: 56.25%; height: 0;">
-            <iframe 
-                id="showcaseVideo"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-                src="" 
-                allowfullscreen>
-            </iframe>
-        </div>
-    </div>
-</div>
-
 <section id="games">
     <div class="reveal">
-        <h2 class="section-title">Released Games</h2>
+        <h2 class="section-title">Games</h2>
         <div class="section-frame">
-            <div class="showcase-grid"> <a href="https://www.roblox.com/games/82318718780793/Persona-Grounds" target="_blank" class="showcase-btn" style="text-decoration:none;">
-                    <span>Persona Grounds</span>
-                    <span style="color:#ef4444; font-size: 0.8rem;">➔</span>
+            <div class="games-grid">
+                <a href="https://www.roblox.com/games/82318718780793/Persona-Grounds" target="_blank" class="game-card">
+                    <span class="game-title">Persona Grounds ➔</span>
+                    <p class="game-desc">Turn-Based style fighting game based on the Persona JRPG series.</p>
                 </a>
-                <a href="https://www.roblox.com/games/12062510685/The-Interview" target="_blank" class="showcase-btn" style="text-decoration:none;">
-                    <span>The Interview</span>
-                    <span style="color:#ef4444; font-size: 0.8rem;">➔</span>
+                <a href="https://www.roblox.com/games/12062510685/The-Interview" target="_blank" class="game-card">
+                    <span class="game-title">The Interview ➔</span>
+                    <p class="game-desc">Psychological horror experience that breaks the fourth wall.</p>
+                </a>
+                <a href="https://www.roblox.com/games/106649717088998/Battle-of-Blades" target="_blank" class="game-card">
+                    <span class="game-title">Battle of Blades ➔</span>
+                    <p class="game-desc">Competitive first-person melee combat game currently in Alpha.</p>
+                </a>
+                <a href="https://www.roblox.com/games/5998321931/Art-Simulator" target="_blank" class="game-card">
+                    <span class="game-title">Art Simulator ➔</span>
+                    <p class="game-desc">Creative simulator experience focused on building an art empire.</p>
                 </a>
             </div>
         </div>
@@ -290,12 +281,25 @@
             <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
                 <span class="work-tag">Item Trading</span>
                 <span class="work-tag">Inventory System</span>
-                <span class="work-tag">Map Voting</span>
-                <span class="work-tag">Combat/Melee</span>
-                <span class="work-tag">Gun Systems</span>
-                <span class="work-tag">Fishing Systems</span>
-                <span class="work-tag">Pets/Hatching</span>
-                <span class="work-tag">DataStore2</span>
+                <span class="work-tag">Map Voting System</span>
+                <span class="work-tag">Melee Weapons</span>
+                <span class="work-tag">Simple Admin</span>
+                <span class="work-tag">Gun System</span>
+                <span class="work-tag">Fishing System</span>
+                <span class="work-tag">Simulator Systems</span>
+                <span class="work-tag">Spectating System</span>
+                <span class="work-tag">Pets & Hatching</span>
+                <span class="work-tag">Combat Abilities</span>
+                <span class="work-tag">Shop Systems</span>
+                <span class="work-tag">Donation Stands</span>
+                <span class="work-tag">Job System</span>
+                <span class="work-tag">Custom Commands</span>
+                <span class="work-tag">Morphs</span>
+                <span class="work-tag">Character Customization</span>
+                <span class="work-tag">DataStore / Leaderstats</span>
+                <span class="work-tag">Global Leaderboards</span>
+                <span class="work-tag">Dialogue Systems</span>
+                <span class="work-tag">General Tools</span>
             </div>
         </div>
     </div>
@@ -309,12 +313,28 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.069.069 0 0 0-.032.027C.533 9.048-.32 13.579.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.23 10.23 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
                 Message on Discord
             </a>
+            <a href="https://www.roblox.com/users/1717362124/profile" target="_blank" class="contact-btn">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.926 23.998L0 18.892 5.075.002 24 5.108zM15.36 12.474l-4.102-1.107-1.107 4.102 4.102 1.107z"/></svg>
+                Roblox: thepower19012
+            </a>
             <div style="margin-top:20px; color:#a1a1aa; font-size:0.9rem;">
                 Payments accepted via PayPal only.
             </div>
         </div>
     </div>
 </section>
+
+<div class="modal-overlay" id="videoModal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span id="mTitle" style="color:#ef4444; font-weight:700;">Showcase</span>
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+        </div>
+        <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+            <iframe id="showcaseVideo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
 
 <script>
     // MODAL LOGIC
@@ -333,27 +353,6 @@
         iframe.src = "";
     }
 
-    // STAR BACKGROUND
-    function initStars() {
-        const bg = document.getElementById('bg-container');
-        for (let i = 0; i < 150; i++) {
-            const star = document.createElement('div');
-            const isRed = Math.random() > 0.9;
-            star.style.position = 'absolute';
-            star.style.left = `${Math.random()*100}%`;
-            star.style.top = `${Math.random()*100}%`;
-            if (isRed) {
-                star.className = 'custom-star';
-                star.style.width = star.style.height = '8px';
-            } else {
-                star.style.width = star.style.height = '1px';
-                star.style.background = '#fff';
-            }
-            star.style.animation = `twinkle ${Math.random()*3+2}s infinite`;
-            bg.appendChild(star);
-        }
-    }
-
     // TYPEWRITER
     const textSpan = document.getElementById('typewriter');
     const words = ["Hey, I'm Zylitee.", "I'm a Roblox Scripter.", "Let's build together."];
@@ -364,6 +363,26 @@
         if (!isDel && cIdx > cur.length) { isDel = true; setTimeout(playType, 2000); }
         else if (isDel && cIdx < 0) { isDel = false; wIdx = (wIdx+1)%words.length; setTimeout(playType, 500); }
         else { setTimeout(playType, isDel ? 50 : 100); }
+    }
+
+    // STARS & REVEAL
+    function initStars() {
+        const bg = document.getElementById('bg-container');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.left = `${Math.random()*100}%`;
+            star.style.top = `${Math.random()*100}%`;
+            if (Math.random() > 0.9) {
+                star.className = 'custom-star';
+                star.style.width = star.style.height = '8px';
+            } else {
+                star.style.width = star.style.height = '1px';
+                star.style.background = '#fff';
+            }
+            star.style.animation = `twinkle ${Math.random()*3+2}s infinite`;
+            bg.appendChild(star);
+        }
     }
 
     const obs = new IntersectionObserver((entries) => {
