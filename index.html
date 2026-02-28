@@ -3,107 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Red Space Edition</title>
+    <title>Zylitee | Developer Portfolio</title>
+    <!-- Importing Elegant Fonts -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
         /* 1. STARRY SPACE BACKGROUND */
         html { scroll-behavior: smooth; }
         body { 
             background-color: #050505; 
             background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 1px, transparent 20px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+                radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 20px),
+                radial-gradient(white, rgba(255,255,255,.05) 1px, transparent 30px);
             background-size: 550px 550px, 350px 350px; 
             background-position: 0 0, 40px 60px;
-            color: white; font-family: 'Segoe UI', sans-serif; margin: 0; 
+            color: #e0e0e0; /* Softer white for eyes */
+            font-family: 'Inter', sans-serif; margin: 0; 
         }
 
-        /* 2. TOP NAV BAR (#020616) WITH RED ACCENTS */
+        /* 2. TOP NAV BAR (#020616) WITH SOFT RED ACCENTS */
         header { 
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: #020616;
-            border-bottom: 2px solid #8b0000; 
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5); 
+            border-bottom: 2px solid #8e1a1a; 
+            box-shadow: 0 0 15px rgba(142, 26, 26, 0.4); 
         }
-        nav { display: flex; justify-content: center; padding: 20px; gap: 40px; }
+        nav { display: flex; justify-content: center; padding: 18px; gap: 40px; }
         nav a { 
-            color: #ff9999; text-decoration: none; font-weight: bold; 
-            font-size: 1.1em; transition: all 0.3s ease; 
+            color: #ff9999; text-decoration: none; font-weight: 600; 
+            font-size: 1em; transition: all 0.3s ease; 
         }
         nav a:hover { 
             color: white; 
-            text-shadow: 0 0 10px #ff0000; 
-            transform: translateY(-3px); 
+            text-shadow: 0 0 8px #d32f2f; 
+            transform: translateY(-2px); 
         }
 
-        /* 3. SECTION STYLING */
-        section { min-height: 100vh; padding: 120px 20px 50px; box-sizing: border-box; }
-        h2 { color: #ff0000; text-align: center; font-size: 2.5em; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
+        /* 3. TYPEWRITER HEADER */
+        .typewriter-container {
+            text-align: center;
+            padding-top: 50px;
+            min-height: 80px;
+        }
+        #typewriter {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5em;
+            color: #d32f2f; /* Soft crimson red */
+            border-right: 3px solid #d32f2f; /* Cursor */
+            padding-right: 5px;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 50% { border-color: transparent; } }
 
-        /* 4. PROFILE FRAME */
+        /* 4. SECTION STYLING */
+        section { min-height: 100vh; padding: 140px 20px 50px; box-sizing: border-box; }
+        h2 { 
+            font-family: 'Playfair Display', serif; 
+            color: #d32f2f; text-align: center; font-size: 2.2em; 
+            margin-bottom: 40px; letter-spacing: 1px; 
+        }
+
+        /* 5. PROFILE FRAME */
         .profile-frame {
-            width: 180px; height: 180px;
-            margin: 30px auto;
+            width: 160px; height: 160px;
+            margin: 40px auto;
             border-radius: 50%;
-            border: 4px solid #8b0000;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+            border: 3px solid #8e1a1a;
+            box-shadow: 0 0 20px rgba(211, 47, 47, 0.3);
             overflow: hidden;
             background: #020616;
         }
         .profile-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 5. SMALL RECTANGULAR CARDS & GRID */
+        /* 6. GRID & SMALL CARDS */
         .grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Smaller min-width */
-            gap: 25px; /* Equal spacing */
-            max-width: 1100px; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 30px; 
+            max-width: 1000px; 
             margin: auto; 
-            padding: 0 20px;
         }
-        
         .card { 
             background: rgba(2, 6, 22, 0.9); 
-            border: 1px solid #4a0000;
-            border-radius: 8px; 
+            border: 1px solid #3d0a0a;
+            border-radius: 10px; 
             overflow: hidden; 
             position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            transition: all 0.4s ease; 
             cursor: pointer; 
-            text-decoration: none; 
-            color: inherit;
-            height: 180px; /* Rectangular height */
+            height: 160px; /* Small rectangular profile */
         }
-        
         .card:hover { 
-            transform: translateY(-10px); 
-            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.5); 
-            border-color: #ff0000;
+            transform: translateY(-8px); 
+            box-shadow: 0 10px 25px rgba(211, 47, 47, 0.4); 
+            border-color: #d32f2f;
         }
-
         .card img, .card video { width: 100%; height: 100%; object-fit: cover; }
-        
-        .card-title-overlay {
-            position: absolute; bottom: 0; width: 100%;
-            background: rgba(0,0,0,0.7); padding: 8px;
-            text-align: center; font-weight: bold; font-size: 0.9em;
-        }
-        
+
         /* HOVER DESCRIPTION */
         .work-desc { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(139, 0, 0, 0.95); 
+            background: rgba(142, 26, 26, 0.95); 
             display: flex; align-items: center; justify-content: center; 
             padding: 15px; text-align: center; opacity: 0; 
-            transition: opacity 0.3s ease; font-size: 0.9em;
+            transition: opacity 0.3s ease; font-size: 0.9em; font-weight: 600;
         }
         .card:hover .work-desc { opacity: 1; }
-
-        /* CONTACT SECTION */
-        #contact .content-box { 
-            background: rgba(2, 6, 22, 0.8); max-width: 500px; margin: auto; 
-            padding: 30px; border-radius: 12px; border: 1px solid #8b0000;
-            text-align: center; box-shadow: 0 0 15px rgba(255,0,0,0.2);
-        }
     </style>
 </head>
 <body>
@@ -119,13 +123,17 @@
 
 <!-- ABOUT SECTION -->
 <section id="about">
-    <h2>About Me</h2>
-    <div style="max-width: 700px; margin: auto; text-align: center;">
-        <p style="font-size: 1.2em; color: #ccc;">Developer & Creator. Passionate about building immersive Roblox worlds and high-quality gameplay experiences.</p>
+    <div class="typewriter-container">
+        <span id="typewriter"></span>
+    </div>
+    
+    <div style="max-width: 700px; margin: auto; text-align: center; margin-top: 20px;">
+        <p style="font-size: 1.1em; color: #b0b0b0; line-height: 1.6;">
+            I am a dedicated developer focused on creating unique and polished experiences within the Roblox engine.
+        </p>
         
-        <!-- Profile Frame -->
         <div class="profile-frame">
-            <img src="https://via.placeholder.com" alt="Your Profile Picture">
+            <img src="https://via.placeholder.com" alt="Zylitee Profile">
         </div>
     </div>
 </section>
@@ -134,41 +142,72 @@
 <section id="work">
     <h2>Work</h2>
     <div class="grid">
-        <!-- Project 1 -->
-        <a href="https://www.roblox.com" target="_blank" class="card">
-            <img src="https://via.placeholder.com" alt="Sword Game">
-            <div class="card-title-overlay">Sword Game</div>
-            <div class="work-desc">
-                <p>A fast-paced combat simulator with unique sword abilities.</p>
-            </div>
+        <a href="YOUR_LINK" target="_blank" class="card">
+            <img src="https://via.placeholder.com" alt="Project">
+            <div class="work-desc">Click to visit the project website or game.</div>
         </a>
-        <!-- Add more cards as needed -->
     </div>
 </section>
 
 <!-- VIDEO SECTION -->
 <section id="video">
-    <h2>Videos</h2>
+    <h2>Video Highlights</h2>
     <div class="grid">
-        <!-- Video Card -->
         <div class="card">
             <video controls>
                 <source src="your-video.mp4" type="video/mp4">
             </video>
-            <div class="card-title-overlay">Gameplay Trailer</div>
         </div>
     </div>
 </section>
 
 <!-- CONTACT SECTION -->
 <section id="contact">
-    <h2>Contact & Payment</h2>
-    <div class="content-box">
-        <p>📧 <strong>Email:</strong> yourname@example.com</p>
-        <p>🎮 <strong>Discord:</strong> youruser#0000</p>
+    <h2>Get in Touch</h2>
+    <div style="background: rgba(2, 6, 22, 0.8); max-width: 500px; margin: auto; padding: 30px; border-radius: 12px; border: 1px solid #8e1a1a; text-align: center;">
+        <p>📧 <strong>Email:</strong> contact@zylitee.me</p>
+        <p>🎮 <strong>Discord:</strong> zylitee</p>
         <p>💳 <strong>Payment:</strong> PayPal / Robux</p>
     </div>
 </section>
 
+<script>
+    const textElement = document.getElementById('typewriter');
+    const phrases = ["Hey I'm Zylitee.", "I'm a roblox developer."];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function typeEffect() {
+        const currentPhrase = phrases[phraseIndex];
+        
+        if (isDeleting) {
+            textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            typeSpeed = 50;
+        } else {
+            textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            typeSpeed = 100;
+        }
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            isDeleting = true;
+            typeSpeed = 2000; // Pause at the end
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(typeEffect, typeSpeed);
+    }
+
+    // Start the effect
+    typeEffect();
+</script>
+
 </body>
 </html>
+
