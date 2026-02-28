@@ -11,16 +11,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* 1. CORE STYLES */
+        /* 1. CORE & TWEENING BASICS */
         html { scroll-behavior: smooth; }
         body { 
             background-color: #020205; color: #f0f0f0; 
-            font-family: 'Inter', sans-serif; /* Modern, clean body font */
+            font-family: 'Inter', sans-serif;
             margin: 0; overflow-x: hidden;
-            letter-spacing: -0.01em;
+            opacity: 0; /* Starts hidden for the entrance tween */
+            animation: fadeInPage 1.2s ease-out forwards;
         }
 
-        h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; letter-spacing: -0.03em; }
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 2. ENTRANCE REVEAL (For scroll animations) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         #star-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -28,27 +43,29 @@
         }
 
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0.2; }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.2); }
-        }
 
-        /* 2. NAV */
+        /* 3. NAV TWEEN */
         header { 
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: rgba(2, 2, 5, 0.8);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(239, 68, 68, 0.1); 
+            animation: slideDown 0.8s cubic-bezier(0.2, 1, 0.3, 1) 0.2s both;
         }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         nav { display: flex; justify-content: center; padding: 20px; gap: 35px; }
         nav a { 
             color: #a1a1aa; text-decoration: none; font-weight: 600; 
             font-size: 0.85em; transition: 0.3s;
             text-transform: uppercase; letter-spacing: 0.15em;
         }
-        nav a:hover { color: #ef4444; }
+        nav a:hover { color: #ef4444; transform: scale(1.05); }
 
-        /* 3. HERO & TYPEWRITER */
+        /* 4. HERO */
         section { min-height: 100vh; padding: 180px 20px 80px; box-sizing: border-box; }
         #typewriter {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -57,7 +74,7 @@
             letter-spacing: -0.04em;
         }
 
-        /* 4. CONTENT FRAMES */
+        /* 5. CONTENT FRAMES */
         .section-frame {
             background: rgba(15, 15, 25, 0.4);
             border: 1px solid rgba(239, 68, 68, 0.1);
@@ -70,32 +87,41 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
 
-        /* 5. UPDATED DISCORD BADGE (GREY & RED) */
+        /* 6. DISCORD BADGE (NOW A LINK) */
         .discord-badge {
             display: inline-flex; border-radius: 8px; overflow: hidden;
             font-weight: 600; font-size: 13px; margin: 35px auto;
             border: 1px solid rgba(239, 68, 68, 0.2);
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .discord-badge:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
         }
         .discord-label { background: #1f1f23; color: #a1a1aa; padding: 10px 18px; letter-spacing: 0.05em; }
         .discord-username { background: #ef4444; color: white; padding: 10px 22px; }
 
+        /* 7. PROFILE (GITHUB LINK) */
+        .profile-link { display: block; width: 150px; margin: 35px auto; text-decoration: none; }
         .profile-frame {
-            width: 150px; height: 150px; margin: 35px auto;
+            width: 150px; height: 150px;
             border-radius: 50%; border: 3px solid #ef4444;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden; box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
         }
-        .profile-frame:hover { transform: scale(1.1) rotate(5deg); }
+        .profile-link:hover .profile-frame { transform: scale(1.1) rotate(8deg); border-color: #fff; }
         .profile-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 6. GRID & CARDS */
+        /* 8. GRID & CARDS */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
         .card { 
             background: #0a0a0f; border: 1px solid rgba(255,255,255,0.03);
             border-radius: 20px; overflow: hidden; position: relative;
-            transition: 0.3s; height: 200px;
+            transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1); height: 200px;
         }
-        .card:hover { transform: translateY(-8px); border-color: #ef4444; box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1); }
+        .card:hover { transform: translateY(-12px); border-color: #ef4444; }
         
         .work-desc { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -115,24 +141,37 @@
 <body>
 
 <div id="star-container"></div>
-<header><nav><a href="#about">About</a><a href="#work">Work</a><a href="#video">Video</a><a href="#contact">Contact</a></nav></header>
+<header>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#video">Video</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
 
 <section id="about">
     <div style="text-align: center;"><span id="typewriter"></span></div>
-    <div style="max-width: 600px; margin: auto; text-align: center; margin-top: 25px;">
-        <p style="color: #a1a1aa; font-size: 1.1rem; line-height: 1.6; font-weight: 300;">Developing immersive, high-performance experiences within the <span style="color:white; font-weight: 600;">Roblox</span> ecosystem.</p>
+    <div class="reveal" style="max-width: 600px; margin: auto; text-align: center; margin-top: 25px;">
+        <p style="color: #a1a1aa; font-size: 1.1rem; line-height: 1.6; font-weight: 300;">
+            Developing immersive, high-performance experiences within the <span style="color:white; font-weight: 600;">Roblox</span> ecosystem.
+        </p>
         
-        <div class="discord-badge">
+        <a href="https://discord.com/users/743359639294312548" target="_blank" class="discord-badge">
             <div class="discord-label">DISCORD</div>
             <div class="discord-username">zylitee</div>
-        </div>
+        </a>
         
-        <div class="profile-frame"><img src="https://github.com/ZYLITEE.png" alt="Zylitee Avatar"></div>
+        <a href="https://github.com/ZYLITEE" target="_blank" class="profile-link">
+            <div class="profile-frame">
+                <img src="https://github.com/ZYLITEE.png" alt="Zylitee Avatar">
+            </div>
+        </a>
     </div>
 </section>
 
 <section id="work">
-    <div class="section-frame">
+    <div class="section-frame reveal">
         <h2 style="text-align: center; color: #ef4444; margin: 0; font-size: 2rem;">Featured Work</h2>
         <div class="grid">
             <a href="#" class="card">
@@ -144,7 +183,7 @@
 </section>
 
 <section id="video">
-    <div class="section-frame">
+    <div class="section-frame reveal">
         <h2 style="text-align: center; color: #ef4444; margin: 0; font-size: 2rem;">Showreel</h2>
         <div class="grid">
             <div class="card" style="height: auto; aspect-ratio: 16/9; border-radius: 20px;">
@@ -157,13 +196,14 @@
 </section>
 
 <section id="contact" style="text-align: center; padding-bottom: 150px;">
-    <div style="background: rgba(15, 15, 25, 0.6); padding: 50px; border-radius: 24px; display: inline-block; border: 1px solid rgba(239, 68, 68, 0.2); backdrop-filter: blur(10px);">
+    <div class="reveal" style="background: rgba(15, 15, 25, 0.6); padding: 50px; border-radius: 24px; display: inline-block; border: 1px solid rgba(239, 68, 68, 0.2); backdrop-filter: blur(10px);">
         <h2 style="margin-top: 0; color: #ef4444;">Get in Touch</h2>
         <p style="color: #a1a1aa; font-size: 1.2rem;">📧 contact@zylitee.me</p>
     </div>
 </section>
 
 <script>
+    // 1. STAR FIELD
     function createStars() {
         const container = document.getElementById('star-container');
         const fragment = document.createDocumentFragment();
@@ -180,6 +220,7 @@
         container.appendChild(fragment);
     }
 
+    // 2. SHOOTING STAR
     function shootStar() {
         const star = document.createElement('div');
         star.className = 'shooting-star';
@@ -193,6 +234,7 @@
         setTimeout(shootStar, Math.random() * 8000 + 4000);
     }
 
+    // 3. TYPEWRITER
     const textElement = document.getElementById('typewriter');
     const phrases = ["Hey, I'm Zylitee.", "I'm a Roblox Developer."];
     let pIdx = 0, cIdx = 0, isDel = false;
@@ -205,9 +247,26 @@
         setTimeout(type, speed);
     }
 
+    // 4. SCROLL REVEAL (TWEENING ON SCROLL)
+    function revealOnScroll() {
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(el => {
+            const windowHeight = window.innerHeight;
+            const elementTop = el.getBoundingClientRect().top;
+            const elementVisible = 100;
+            if (elementTop < windowHeight - elementVisible) {
+                el.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    
+    // Init
     createStars();
     shootStar();
     type();
+    revealOnScroll(); // Check once on load
 </script>
 </body>
 </html>
