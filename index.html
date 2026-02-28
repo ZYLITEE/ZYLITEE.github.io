@@ -3,222 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zylitee | Developer Portfolio</title>
-    <link rel="shortcut icon" type="image/png" href="favicon.png">
-    <!-- Modern Tech Fonts -->
+    <title>Zylitee | Portfolio</title>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
-        /* 1. STARRY BACKGROUND SYSTEM */
+        /* 1. OPTIMIZED BACKGROUND */
         html { scroll-behavior: smooth; }
         body { 
-            background-color: #020205; 
-            color: #f0f0f0; 
-            font-family: 'Outfit', sans-serif; 
-            margin: 0; 
-            overflow-x: hidden;
-            letter-spacing: -0.01em;
+            background-color: #020205; color: #f0f0f0; 
+            font-family: 'Outfit', sans-serif; margin: 0; overflow-x: hidden;
         }
 
         #star-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none;
-            background: radial-gradient(circle at 50% 50%, #0a0a1a 0%, #020205 100%);
+            background: #020205;
+            will-change: transform; /* Hint to browser for optimization */
         }
 
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0.2; }
-        
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 0.9; transform: scale(1.3); box-shadow: 0 0 8px rgba(255,255,255,0.8); }
+            50% { opacity: 0.8; transform: scale(1.2); }
         }
 
-        /* 2. MODERN GLASS NAV BAR */
+        /* 2. OPTIMIZED NAV (Removed heavy blur for speed) */
         header { 
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(2, 6, 22, 0.7);
-            backdrop-filter: blur(12px); /* Modern blur effect */
+            background: rgba(2, 6, 22, 0.9);
             border-bottom: 1px solid rgba(211, 47, 47, 0.2); 
         }
-        nav { display: flex; justify-content: center; padding: 20px; gap: 50px; }
+        nav { display: flex; justify-content: center; padding: 18px; gap: 40px; }
         nav a { 
-            color: rgba(255, 153, 153, 0.8); text-decoration: none; font-weight: 600; 
-            font-size: 0.95em; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #ff9999; text-decoration: none; font-weight: 600; 
+            font-size: 0.9em; transition: transform 0.2s ease, color 0.2s ease;
             text-transform: uppercase; letter-spacing: 0.1em;
         }
         nav a:hover { color: #f87171; transform: translateY(-2px); }
 
-        /* 3. TYPEWRITER & HERO */
-        section { min-height: 100vh; padding: 160px 24px 80px; box-sizing: border-box; }
-        .typewriter-container { text-align: center; min-height: 100px; }
+        /* 3. HERO & TYPEWRITER */
+        section { min-height: 100vh; padding: 160px 20px 80px; box-sizing: border-box; }
         #typewriter {
             font-family: 'Bricolage Grotesque', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 4.5rem); /* Responsive sizing */
-            font-weight: 800;
-            color: #ef4444; 
-            border-right: 4px solid #ef4444; padding-right: 8px;
+            font-size: clamp(2rem, 8vw, 4rem); font-weight: 800;
+            color: #ef4444; border-right: 4px solid #ef4444; padding-right: 8px;
             animation: blink 0.8s infinite;
         }
         @keyframes blink { 50% { border-color: transparent; } }
 
         /* 4. DISCORD BADGE */
         .discord-badge {
-            display: inline-flex; align-items: center; border-radius: 6px;
-            overflow: hidden; font-family: 'Outfit', sans-serif;
-            font-weight: 600; font-size: 13px; letter-spacing: 0.05em;
-            margin: 30px auto; cursor: default;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            display: inline-flex; border-radius: 4px; overflow: hidden;
+            font-weight: 600; font-size: 13px; margin: 30px auto;
         }
-        .discord-label { background: #333; color: #ccc; padding: 10px 18px; display: flex; align-items: center; gap: 10px; }
-        .discord-username { background: #5865F2; color: white; padding: 10px 22px; }
-        .discord-icon { width: 18px; height: 18px; fill: white; }
+        .discord-label { background: #333; color: #ccc; padding: 8px 15px; display: flex; align-items: center; gap: 8px; }
+        .discord-username { background: #5865F2; color: white; padding: 8px 20px; }
 
         /* 5. PROFILE FRAME */
         .profile-frame {
             width: 140px; height: 140px; margin: 30px auto;
-            border-radius: 50%; border: 2px solid rgba(239, 68, 68, 0.4);
-            padding: 5px;
-            transition: transform 0.5s ease;
+            border-radius: 50%; border: 2px solid #ef4444;
+            transition: transform 0.3s ease;
         }
-        .profile-frame:hover { transform: scale(1.05) rotate(5deg); }
+        .profile-frame:hover { transform: scale(1.05); }
         .profile-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-        /* 6. MODERN GRID & CARDS */
-        h2 { font-family: 'Bricolage Grotesque', sans-serif; color: #ef4444; text-align: center; font-size: 2.5em; margin-bottom: 50px; font-weight: 700; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; max-width: 1100px; margin: auto; }
-        
+        /* 6. OPTIMIZED CARDS */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; max-width: 1000px; margin: auto; }
         .card { 
-            background: rgba(15, 15, 25, 0.6); 
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px; overflow: hidden; position: relative;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            cursor: pointer; height: 180px; 
+            background: #0f0f19; border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px; overflow: hidden; position: relative;
+            transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+            height: 160px; will-change: transform;
         }
-        .card:hover { 
-            transform: translateY(-12px); 
-            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.15); 
-            border-color: rgba(239, 68, 68, 0.5); 
-        }
-        .card img, .card video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.4s; }
-        .card:hover img { opacity: 1; transform: scale(1.05); }
-
+        .card:hover { transform: translateY(-10px); border-color: #ef4444; }
+        
         .work-desc { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(239, 68, 68, 0.9); display: flex; align-items: center;
-            justify-content: center; padding: 24px; text-align: center;
-            opacity: 0; transition: all 0.3s ease; font-size: 0.95em; font-weight: 600;
-            color: white;
+            background: rgba(211, 47, 47, 0.95); display: flex; align-items: center;
+            justify-content: center; padding: 20px; text-align: center;
+            opacity: 0; transition: opacity 0.2s ease; font-weight: 600;
         }
         .card:hover .work-desc { opacity: 1; }
 
-        /* 7. CONTACT & SHOOTING STARS */
-        #contact .box { 
-            background: rgba(15, 15, 25, 0.8); max-width: 500px; margin: auto; 
-            padding: 40px; border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.2); 
-            text-align: center; 
-        }
+        /* 7. CORRECTED SHOOTING STAR */
         .shooting-star {
-            position: absolute; width: 120px; height: 1px;
-            background: linear-gradient(90deg, white, transparent);
-            opacity: 0; z-index: -1;
+            position: absolute;
+            width: 150px; height: 2px;
+            /* Head is bright white, Tail fades out completely */
+            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            z-index: -1; pointer-events: none;
+            transform: rotate(-45deg); /* Faces the travel direction */
         }
     </style>
 </head>
 <body>
 
 <div id="star-container"></div>
-<header>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#video">Video</a>
-        <a href="#contact">Contact</a>
-    </nav>
-</header>
+<header><nav><a href="#about">About</a><a href="#work">Work</a><a href="#video">Video</a><a href="#contact">Contact</a></nav></header>
 
 <section id="about">
-    <div class="typewriter-container"><span id="typewriter"></span></div>
-    <div style="max-width: 650px; margin: auto; text-align: center; margin-top: 25px;">
-        <p style="font-size: 1.15em; color: #a1a1aa; line-height: 1.7; font-weight: 300;">
-            Architecting immersive digital worlds and high-performance mechanics within the Roblox ecosystem.
-        </p>
-        
+    <div style="text-align: center;"><span id="typewriter"></span></div>
+    <div style="max-width: 600px; margin: auto; text-align: center; margin-top: 20px;">
+        <p style="color: #a1a1aa; line-height: 1.6;">Building high-performance experiences in the Roblox ecosystem.</p>
         <div class="discord-badge">
-            <div class="discord-label">
-                <svg class="discord-icon" viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.06,72.06,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.39,80.21a105.73,105.73,0,0,0,32.17,16.15,77.7,77.7,0,0,0,6.89-11.11,68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.72-27.22-4.55-50.87-19.4-72.13ZM42.45,65.69C36.18,65.69,31,60,31,53s5.12-12.72,11.44-12.72S54,46,53.86,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.12-12.72,11.44-12.72S96.28,46,96.14,53,91,65.69,84.69,65.69Z""")/>></svg>
-                DISCORD
-            </div>
+            <div class="discord-label">DISCORD</div>
             <div class="discord-username">MYSTRIA7204</div>
         </div>
-
-        <div class="profile-frame">
-            <img src="https://github.com" alt="Zylitee Profile">
-        </div>
+        <div class="profile-frame"><img src="https://github.com"></div>
     </div>
 </section>
 
 <section id="work">
-    <h2>Work</h2>
+    <h2 style="text-align: center; color: #ef4444; font-family: 'Bricolage Grotesque';">Work</h2>
     <div class="grid">
-        <a href="YOUR_LINK" target="_blank" class="card">
-            <img src="https://via.placeholder.com" alt="Project">
-            <div class="work-desc">View Live Project →</div>
+        <a href="#" class="card">
+            <img src="https://via.placeholder.com" style="width:100%; height:100%; object-fit:cover;">
+            <div class="work-desc">View Project →</div>
         </a>
     </div>
 </section>
 
 <section id="video">
-    <h2>Showreel</h2>
-    <div class="grid">
-        <div class="card">
-            <video controls preload="metadata"><source src="your-video.mp4" type="video/mp4"></video>
-        </div>
-    </div>
+    <h2 style="text-align: center; color: #ef4444; font-family: 'Bricolage Grotesque';">Showreel</h2>
+    <div class="grid"><div class="card"><video controls style="width:100%; height:100%; object-fit:cover;"><source src=""></video></div></div>
 </section>
 
-<section id="contact">
-    <h2>Collaborate</h2>
-    <div class="box">
-        <p style="font-size: 1.1em; color: #a1a1aa; margin-bottom: 25px;">Ready to start a new project?</p>
+<section id="contact" style="text-align: center;">
+    <div style="background: #0f0f19; padding: 40px; border-radius: 12px; display: inline-block; border: 1px solid #3d0a0a;">
+        <h2 style="margin-top: 0; font-family: 'Bricolage Grotesque';">Contact</h2>
         <p>📧 contact@zylitee.me</p>
-        <p>🎮 Discord: zylitee</p>
-        <p style="margin-top: 20px; font-size: 0.8em; opacity: 0.6;">Accepted: PayPal / Robux</p>
     </div>
 </section>
 
 <script>
-    // 1. DENSE STAR FIELD
+    // 1. STAR FIELD (Lighter for performance)
     function createStars() {
         const container = document.getElementById('star-container');
-        for (let i = 0; i < 450; i++) {
+        const fragment = document.createDocumentFragment(); // Faster DOM updates
+        for (let i = 0; i < 250; i++) {
             const star = document.createElement('div');
             star.className = 'star';
-            const size = Math.random() * 1.8 + 0.4;
+            const size = Math.random() * 1.5 + 0.5;
             star.style.width = star.style.height = `${size}px`;
             star.style.left = `${Math.random() * 100}%`;
             star.style.top = `${Math.random() * 100}%`;
-            if (Math.random() > 0.4) {
-                star.style.animation = `twinkle ${Math.random() * 4 + 3}s infinite ease-in-out`;
-                star.style.animationDelay = `${Math.random() * 5}s`;
+            if (Math.random() > 0.6) {
+                star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
             }
-            container.appendChild(star);
+            fragment.appendChild(star);
         }
+        container.appendChild(fragment);
     }
 
-    // 2. SHOOTING STARS
+    // 2. SHOOTING STAR (Correct Direction + Fade Out)
     function shootStar() {
         const star = document.createElement('div');
         star.className = 'shooting-star';
-        star.style.top = `${Math.random() * 40}%`;
-        star.style.left = `${Math.random() * 40}%`;
+        // Start from random point in top-left half
+        star.style.top = `${Math.random() * 30}%`;
+        star.style.left = `${Math.random() * 30}%`;
         document.body.appendChild(star);
+        
         star.animate([
-            { transform: 'translateX(0) translateY(0) rotate(-35deg)', opacity: 1 },
-            { transform: 'translateX(800px) translateY(500px) rotate(-35deg)', opacity: 0 }
-        ], { duration: 1200, easing: 'cubic-bezier(0.1, 0, 0.1, 1)' }).onfinish = () => star.remove();
-        setTimeout(shootStar, Math.random() * 8000 + 4000);
+            { transform: 'translate(0, 0) rotate(-45deg)', opacity: 1 },
+            { transform: 'translate(600px, 600px) rotate(-45deg)', opacity: 0 } // Fades while moving
+        ], { duration: 1000, easing: 'linear' }).onfinish = () => star.remove();
+        
+        setTimeout(shootStar, Math.random() * 10000 + 4000);
     }
 
-    // 3. TYPEWRITER EFFECT
+    // 3. TYPEWRITER
     const textElement = document.getElementById('typewriter');
     const phrases = ["Hey I'm Zylitee.", "I'm a roblox developer."];
     let pIdx = 0, cIdx = 0, isDel = false;
@@ -226,8 +180,8 @@
         const cur = phrases[pIdx];
         textElement.textContent = isDel ? cur.substring(0, cIdx--) : cur.substring(0, cIdx++);
         let speed = isDel ? 40 : 80;
-        if (!isDel && cIdx > cur.length) { isDel = true; speed = 2500; }
-        else if (isDel && cIdx < 0) { isDel = false; pIdx = (pIdx + 1) % phrases.length; cIdx = 0; speed = 600; }
+        if (!isDel && cIdx > cur.length) { isDel = true; speed = 2000; }
+        else if (isDel && cIdx < 0) { isDel = false; pIdx = (pIdx + 1) % phrases.length; cIdx = 0; speed = 500; }
         setTimeout(type, speed);
     }
 
