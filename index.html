@@ -74,6 +74,15 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
+        /* NEW: Deeper Inner Frame for Showcases */
+        .inner-showcase-frame {
+            background: rgba(5, 5, 10, 0.8);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+        }
+
         /* 4. REVEAL ANIMATION */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -110,12 +119,13 @@
 
         /* 6. VIDEO STYLING */
         .video-container {
-            background: #000; border-radius: 20px; overflow: hidden;
-            border: 1px solid rgba(239, 68, 68, 0.2); position: relative;
+            background: #000; border-radius: 15px; overflow: hidden;
+            border: 1px solid rgba(239, 68, 68, 0.1); position: relative;
         }
         .video-title {
-            font-weight: 600; color: #fff; margin-bottom: 15px;
-            font-size: 1.2rem; display: block;
+            font-weight: 600; color: #fff; margin-bottom: 20px;
+            font-size: 1.4rem; display: block; text-align: center;
+            letter-spacing: 0.05em;
         }
 
         #typewriter {
@@ -126,6 +136,12 @@
 
         @keyframes nebulaMove { from { transform: rotate(0deg) scale(1); } to { transform: rotate(5deg) scale(1.1); } }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
+
+        /* Custom Star Clip-Path */
+        .custom-star {
+            background: #ef4444;
+            clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
+        }
     </style>
 </head>
 <body>
@@ -177,11 +193,13 @@
     <div class="reveal">
         <h2 class="section-title">Showcases</h2>
         <div class="section-frame">
-            <span class="video-title">Sword System Showcase</span>
-            <div class="video-container">
-                <video controls style="width:100%; display:block; aspect-ratio:16/9;">
-                    <source src="YOUR_VIDEO_FILE.mp4" type="video/mp4">
-                </video>
+            <div class="inner-showcase-frame">
+                <span class="video-title">Sword System Showcase</span>
+                <div class="video-container">
+                    <video controls style="width:100%; display:block; aspect-ratio:16/9;">
+                        <source src="YOUR_VIDEO_FILE.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
         </div>
     </div>
@@ -191,13 +209,12 @@
     <div class="reveal">
         <h2 class="section-title">Get in Touch</h2>
         <div class="section-frame" style="text-align: center;">
-            
             <a href="https://discord.com/users/743359639294312548" target="_blank" class="contact-btn">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.069.069 0 0 0-.032.027C.533 9.048-.32 13.579.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.23 10.23 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
                 Message on Discord
             </a>
 
-            <a href="https://www.roblox.com/users/12345678/profile" target="_blank" class="contact-btn">
+            <a href="https://www.roblox.com/users/1717362124/profile" target="_blank" class="contact-btn">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.926 23.998L0 18.892 5.075.002 24 5.108zM15.36 12.474l-4.102-1.107-1.107 4.102 4.102 1.107z"/></svg>
                 Roblox: thepower19012
             </a>
@@ -217,22 +234,34 @@
         for (let i = 0; i < 160; i++) {
             const star = document.createElement('div');
             const isRed = Math.random() > 0.88;
-            const size = isRed ? (Math.random() * 3 + 3) : (Math.random() * 1.5 + 0.5);
-            star.style.cssText = `
-                position: absolute; left: ${Math.random()*100}%; top: ${Math.random()*100}%;
-                width: ${size}px; height: ${size}px; border-radius: 50%;
-                background: ${isRed ? '#ef4444' : '#fff'};
-                box-shadow: ${isRed ? '0 0 8px #ef4444' : 'none'};
-                opacity: ${Math.random()};
-                animation: twinkle ${Math.random()*3+2}s infinite ease-in-out;
-            `;
+            
+            // Adjusted size for red stars to show the shape better
+            const size = isRed ? (Math.random() * 8 + 6) : (Math.random() * 1.5 + 0.5);
+            
+            star.style.position = 'absolute';
+            star.style.left = `${Math.random()*100}%`;
+            star.style.top = `${Math.random()*100}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+
+            if (isRed) {
+                // Apply the custom 4-pointed star shape
+                star.classList.add('custom-star');
+                star.style.boxShadow = '0 0 12px rgba(239, 68, 68, 0.4)';
+            } else {
+                star.style.borderRadius = '50%';
+                star.style.background = '#fff';
+            }
+            
+            star.style.opacity = Math.random();
+            star.style.animation = `twinkle ${Math.random()*3+2}s infinite ease-in-out`;
             bg.appendChild(star);
         }
     }
 
     // 2. TYPEWRITER
     const textSpan = document.getElementById('typewriter');
-    const words = ["Hey, I'm Zylitee.", "I build on Roblox.", "I write Luau."];
+    const words = ["Hey, I'm Zylitee.", "I Script on Roblox.", "I'm a Roblox Developer."];
     let wIdx = 0, cIdx = 0, isDel = false;
     function playTypewriter() {
         const cur = words[wIdx];
