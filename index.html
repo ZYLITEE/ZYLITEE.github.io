@@ -16,6 +16,23 @@
         nav a:hover { background: #3a3e42; color: white; }
         nav a.active { background: #00aeff; color: white; }
 
+        /* This targets your buttons or code cards */
+.copy-btn, .code-card, .nav-link {
+    display: inline-block;
+    transition: all 0.3s ease; /* This handles the smooth 'tween' animation */
+    cursor: pointer;
+    border: 1px solid #00aeff; /* Matches the Roblox blue theme */
+}
+
+/* The Hover Effect */
+.copy-btn:hover, .code-card:hover, .nav-link:hover {
+    transform: translateY(-8px); /* Moves the button UPWARDS */
+    box-shadow: 0px 10px 20px rgba(0, 174, 255, 0.4); /* Faint blue GLOW */
+    background-color: #00aeff; /* Optional: fills button with color on hover */
+    color: white;
+}
+
+
         /* Content Area */
         main { flex-grow: 1; margin-left: 20px; }
         .code-card { background: #25282a; padding: 15px; margin-bottom: 15px; border-radius: 8px; border-left: 5px solid #00aeff; }
