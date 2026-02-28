@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zylitee | Portfolio</title>
     <link rel="icon" type="image/png" href="favicon.png?v=2">
+    <link rel="shortcut icon" type="image/png" href="favicon.png?v=2">
+    
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
         /* 1. OPTIMIZED BACKGROUND */
@@ -18,7 +20,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none;
             background: #020205;
-            will-change: transform; /* Hint to browser for optimization */
+            will-change: transform;
         }
 
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0.2; }
@@ -27,7 +29,7 @@
             50% { opacity: 0.8; transform: scale(1.2); }
         }
 
-        /* 2. OPTIMIZED NAV (Removed heavy blur for speed) */
+        /* 2. NAV */
         header { 
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: rgba(2, 6, 22, 0.9);
@@ -51,7 +53,21 @@
         }
         @keyframes blink { 50% { border-color: transparent; } }
 
-        /* 4. DISCORD BADGE */
+        /* 4. CONTENT FRAMES (NEW) */
+        .section-frame {
+            background: rgba(15, 15, 25, 0.6);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 28px; /* Smooth corners */
+            padding: 50px 30px;
+            margin: 0 auto;
+            max-width: 1100px;
+            width: fit-content; /* Adapts to content size */
+            min-width: 320px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        /* 5. DISCORD & PROFILE */
         .discord-badge {
             display: inline-flex; border-radius: 4px; overflow: hidden;
             font-weight: 600; font-size: 13px; margin: 30px auto;
@@ -59,22 +75,22 @@
         .discord-label { background: #333; color: #ccc; padding: 8px 15px; display: flex; align-items: center; gap: 8px; }
         .discord-username { background: #5865F2; color: white; padding: 8px 20px; }
 
-        /* 5. PROFILE FRAME */
         .profile-frame {
             width: 140px; height: 140px; margin: 30px auto;
             border-radius: 50%; border: 2px solid #ef4444;
             transition: transform 0.3s ease;
+            overflow: hidden;
         }
         .profile-frame:hover { transform: scale(1.05); }
-        .profile-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .profile-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 6. OPTIMIZED CARDS */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; max-width: 1000px; margin: auto; }
+        /* 6. CARDS & GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px; }
         .card { 
             background: #0f0f19; border: 1px solid rgba(255,255,255,0.05);
             border-radius: 12px; overflow: hidden; position: relative;
             transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1);
-            height: 160px; will-change: transform;
+            height: 180px; will-change: transform;
         }
         .card:hover { transform: translateY(-10px); border-color: #ef4444; }
         
@@ -82,18 +98,17 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(211, 47, 47, 0.95); display: flex; align-items: center;
             justify-content: center; padding: 20px; text-align: center;
-            opacity: 0; transition: opacity 0.2s ease; font-weight: 600;
+            opacity: 0; transition: opacity 0.2s ease; font-weight: 600; color: white;
+            text-decoration: none;
         }
         .card:hover .work-desc { opacity: 1; }
 
-        /* 7. CORRECTED SHOOTING STAR */
+        /* 7. SHOOTING STAR */
         .shooting-star {
-            position: absolute;
-            width: 150px; height: 2px;
-            /* Head is bright white, Tail fades out completely */
+            position: absolute; width: 150px; height: 2px;
             background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
             z-index: -1; pointer-events: none;
-            transform: rotate(-45deg); /* Faces the travel direction */
+            transform: rotate(-45deg);
         }
     </style>
 </head>
@@ -110,23 +125,33 @@
             <div class="discord-label">DISCORD</div>
             <div class="discord-username">MYSTRIA7204</div>
         </div>
-        <div class="profile-frame"><img src="https://github.com"></div>
+        <div class="profile-frame"><img src="https://github.com/ZYLITEE.png" alt="Zylitee Avatar"></div>
     </div>
 </section>
 
 <section id="work">
-    <h2 style="text-align: center; color: #ef4444; font-family: 'Bricolage Grotesque';">Work</h2>
-    <div class="grid">
-        <a href="#" class="card">
-            <img src="https://via.placeholder.com" style="width:100%; height:100%; object-fit:cover;">
-            <div class="work-desc">View Project →</div>
-        </a>
+    <div class="section-frame">
+        <h2 style="text-align: center; color: #ef4444; font-family: 'Bricolage Grotesque'; margin: 0;">Work</h2>
+        <div class="grid">
+            <a href="#" class="card">
+                <img src="https://via.placeholder.com/400x200" style="width:100%; height:100%; object-fit:cover;">
+                <div class="work-desc">View Project →</div>
+            </a>
+            </div>
     </div>
 </section>
 
 <section id="video">
-    <h2 style="text-align: center; color: #ef4444; font-family: 'Bricolage Grotesque';">Showreel</h2>
-    <div class="grid"><div class="card"><video controls style="width:100%; height:100%; object-fit:cover;"><source src=""></video></div></div>
+    <div class="section-frame">
+        <h2 style="text-align: center; color: #ef4444; font-family: 'Bricolage Grotesque'; margin: 0;">Showreel</h2>
+        <div class="grid">
+            <div class="card" style="height: auto; aspect-ratio: 16/9;">
+                <video controls style="width:100%; height:100%; border-radius: 12px; display: block;">
+                    <source src="YOUR_VIDEO_URL.mp4">
+                </video>
+            </div>
+        </div>
+    </div>
 </section>
 
 <section id="contact" style="text-align: center;">
@@ -137,10 +162,10 @@
 </section>
 
 <script>
-    // 1. STAR FIELD (Lighter for performance)
+    // 1. STAR FIELD
     function createStars() {
         const container = document.getElementById('star-container');
-        const fragment = document.createDocumentFragment(); // Faster DOM updates
+        const fragment = document.createDocumentFragment();
         for (let i = 0; i < 250; i++) {
             const star = document.createElement('div');
             star.className = 'star';
@@ -156,18 +181,17 @@
         container.appendChild(fragment);
     }
 
-    // 2. SHOOTING STAR (Correct Direction + Fade Out)
+    // 2. SHOOTING STAR
     function shootStar() {
         const star = document.createElement('div');
         star.className = 'shooting-star';
-        // Start from random point in top-left half
         star.style.top = `${Math.random() * 30}%`;
         star.style.left = `${Math.random() * 30}%`;
         document.body.appendChild(star);
         
         star.animate([
             { transform: 'translate(0, 0) rotate(-45deg)', opacity: 1 },
-            { transform: 'translate(600px, 600px) rotate(-45deg)', opacity: 0 } // Fades while moving
+            { transform: 'translate(600px, 600px) rotate(-45deg)', opacity: 0 }
         ], { duration: 1000, easing: 'linear' }).onfinish = () => star.remove();
         
         setTimeout(shootStar, Math.random() * 10000 + 4000);
