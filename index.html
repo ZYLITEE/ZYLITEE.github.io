@@ -208,6 +208,7 @@
         .avatar-wrapper {
             position: relative; width: 180px; height: 180px;
             margin: 32px auto 8px;
+            overflow:hidden;
             display: flex; align-items: center; justify-content: center;
         }
         /* Outer pulsing corona */
@@ -223,6 +224,7 @@
             display: block; position: relative; z-index: 3;
             filter: brightness(0.95);
             transition: filter 0.4s;
+            z-index:3;
         }
         .avatar-wrapper:hover .av-img { filter: brightness(1.08); }
         /* Hex outline slightly bigger */
@@ -232,7 +234,7 @@
             transform: translate(-50%,-50%);
             clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
             background: conic-gradient(from 0deg, #ef4444 0%, #ff9a3c 18%, #ef4444 36%, #b00 54%, #ef4444 72%, #ff6060 90%, #ef4444 100%);
-            z-index: 2;
+            z-index: 1;
             animation: hexSpin 6s linear infinite;
         }
         /* White inner fill to make border visible */
@@ -241,6 +243,7 @@
             inset: 3px;
             clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
             background: #050009;
+            inset:4px;
         }
         /* Glow under hex */
         .av-glow {
