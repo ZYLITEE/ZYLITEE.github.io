@@ -203,69 +203,47 @@
         }
 
         /* ═══════════════════════════════
-           AVATAR — cool hexagonal clip with neon glow
+           AVATAR — hexagonal with spinning border, no clipping issue
         ═══════════════════════════════ */
         .avatar-wrapper {
-            position: relative; width: 180px; height: 180px;
+            position: relative; width: 200px; height: 200px;
             margin: 32px auto 8px;
-            overflow:hidden;
             display: flex; align-items: center; justify-content: center;
         }
         /* Outer pulsing corona */
         .av-corona {
-            position: absolute; inset: -20px; border-radius: 50%;
+            position: absolute; inset: -24px; border-radius: 50%;
             background: radial-gradient(circle, rgba(239,68,68,0.18) 0%, transparent 65%);
             animation: corona 3s ease-in-out infinite;
+            pointer-events: none;
         }
-        /* Hexagonal clip path on image */
+        /* The spinning hex border ring — sits OUTSIDE the image, no overlap */
+        /* We use an SVG polygon border that spins around the outside */
+        .av-hex-ring {
+            position: absolute; top: 50%; left: 50%;
+            width: 182px; height: 182px;
+            transform: translate(-50%, -50%);
+            z-index: 4; pointer-events: none;
+            animation: hexSpin 7s linear infinite;
+        }
+        /* The image — hex clipped, sits inside the ring */
         .av-img {
-            width: 148px; height: 148px;
+            width: 152px; height: 152px;
             clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
             display: block; position: relative; z-index: 3;
             filter: brightness(0.95);
             transition: filter 0.4s;
-            z-index:3;
         }
-        .avatar-wrapper:hover .av-img { filter: brightness(1.08); }
-        /* Hex outline slightly bigger */
-        .av-hex-border {
-            position: absolute; top: 50%; left: 50%;
-            width: 162px; height: 162px;
-            transform: translate(-50%,-50%);
-            clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-            background: conic-gradient(from 0deg, #ef4444 0%, #ff9a3c 18%, #ef4444 36%, #b00 54%, #ef4444 72%, #ff6060 90%, #ef4444 100%);
-            z-index: 1;
-            animation: hexSpin 6s linear infinite;
-        }
-        /* White inner fill to make border visible */
-        .av-hex-border::after {
-            content: ""; position: absolute;
-            inset: 3px;
-            clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-            background: #050009;
-            inset:4px;
-        }
-        /* Glow under hex */
+        .avatar-wrapper:hover .av-img { filter: brightness(1.1); }
+        /* Glow behind everything */
         .av-glow {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%,-50%);
-            width: 170px; height: 170px; border-radius: 50%;
-            box-shadow: 0 0 40px 10px rgba(239,68,68,0.3), 0 0 80px 20px rgba(239,68,68,0.12);
+            width: 175px; height: 175px; border-radius: 50%;
+            box-shadow: 0 0 40px 10px rgba(239,68,68,0.28), 0 0 80px 20px rgba(239,68,68,0.10);
             animation: hexGlow 3s ease-in-out infinite;
-            z-index: 1;
+            z-index: 1; pointer-events: none;
         }
-        /* Corner sparkle dots */
-        .av-spark {
-            position: absolute; width: 7px; height: 7px; border-radius: 50%;
-            background: var(--red);
-            box-shadow: 0 0 6px 2px rgba(239,68,68,0.9);
-            z-index: 4;
-            animation: sparkPulse 2s ease-in-out infinite;
-        }
-        .av-spark:nth-child(1) { top: 14px; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
-        .av-spark:nth-child(2) { bottom: 14px; left: 50%; transform: translateX(-50%); animation-delay: 0.5s; }
-        .av-spark:nth-child(3) { top: 50%; right: 4px; transform: translateY(-50%); animation-delay: 1s; width: 5px; height: 5px; }
-        .av-spark:nth-child(4) { top: 50%; left: 4px; transform: translateY(-50%); animation-delay: 1.5s; width: 5px; height: 5px; }
 
         /* ═══════════════════════════════
            SPOTLIGHT HOVER MIXIN
@@ -282,9 +260,10 @@
            VIDEO SHOWCASES — Mac window chrome
         ═══════════════════════════════ */
         .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 14px;
+            justify-content: center;
         }
         .showcase-btn {
             background: var(--card); border: 1px solid var(--border);
@@ -293,13 +272,14 @@
             cursor: pointer; display: flex; align-items: center; justify-content: space-between;
             font-family: 'Inter', sans-serif;
             position: relative; overflow: hidden;
+            width: 270px; flex-shrink: 0;
             transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), border-color 0.3s, box-shadow 0.3s, color 0.3s;
         }
         .showcase-btn:hover {
             border-color: var(--border-hover);
             color: #fff;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 0 1px rgba(239,68,68,0.1), 0 0 20px rgba(239,68,68,0.06);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 14px 32px rgba(0,0,0,0.45), 0 0 0 1px rgba(239,68,68,0.12), 0 0 22px rgba(239,68,68,0.07);
         }
         .play-icon {
             width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%;
@@ -352,9 +332,10 @@
            GAME CARDS
         ═══════════════════════════════ */
         .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 22px;
+            justify-content: center;
         }
         .game-card {
             background: var(--card);
@@ -362,11 +343,12 @@
             border-radius: 22px; padding: 28px;
             text-decoration: none; display: block;
             position: relative; overflow: hidden;
+            width: 300px; flex-shrink: 0; flex-grow: 1; max-width: 360px;
             transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.35s, box-shadow 0.35s;
         }
         .game-card:hover {
             border-color: var(--border-hover);
-            box-shadow: 0 22px 50px rgba(0,0,0,0.55), 0 0 30px rgba(239,68,68,0.07), 0 0 0 1px rgba(239,68,68,0.1);
+            box-shadow: 0 24px 50px rgba(0,0,0,0.55), 0 0 30px rgba(239,68,68,0.08), 0 0 0 1px rgba(239,68,68,0.12);
         }
         .game-title {
             font-family: 'Syne', sans-serif; font-weight: 800;
@@ -395,8 +377,8 @@
         }
         .work-tag:hover {
             border-color: var(--border-hover);
-            transform: translateY(-4px) scale(1.04);
-            box-shadow: 0 8px 20px rgba(239,68,68,0.12), 0 0 0 1px rgba(239,68,68,0.08);
+            transform: translateY(-5px) scale(1.06);
+            box-shadow: 0 10px 24px rgba(239,68,68,0.13), 0 0 0 1px rgba(239,68,68,0.1);
             color: #fff;
         }
 
@@ -404,22 +386,24 @@
            SKILLS
         ═══════════════════════════════ */
         .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 18px;
+            justify-content: center;
         }
         .skill-card {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 18px; padding: 26px 18px 22px;
             text-align: center; position: relative; overflow: hidden;
+            width: 175px; flex-shrink: 0; flex-grow: 1; max-width: 220px;
             transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.35s, box-shadow 0.35s;
             cursor: default;
         }
         .skill-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-7px) scale(1.04);
             border-color: var(--border-hover);
-            box-shadow: 0 18px 40px rgba(0,0,0,0.4), 0 0 30px rgba(239,68,68,0.08), 0 0 0 1px rgba(239,68,68,0.1);
+            box-shadow: 0 20px 44px rgba(0,0,0,0.4), 0 0 30px rgba(239,68,68,0.09), 0 0 0 1px rgba(239,68,68,0.12);
         }
         .sk-icon {
             width: 44px; height: 44px; display: block; margin: 0 auto 13px;
@@ -443,8 +427,8 @@
         }
         .contact-btn:hover {
             border-color: var(--border-hover); color: #fff;
-            transform: scale(1.04) translateY(-3px);
-            box-shadow: 0 12px 30px rgba(239,68,68,0.15), 0 0 0 1px rgba(239,68,68,0.08);
+            transform: scale(1.05) translateY(-4px);
+            box-shadow: 0 14px 32px rgba(239,68,68,0.16), 0 0 0 1px rgba(239,68,68,0.1);
         }
 
         /* ═══════════════════════════════
@@ -493,10 +477,6 @@
             0%,100%{box-shadow:0 0 35px 8px rgba(239,68,68,0.28),0 0 70px 18px rgba(239,68,68,0.10)}
             50%{box-shadow:0 0 55px 14px rgba(239,68,68,0.45),0 0 100px 28px rgba(239,68,68,0.18)}
         }
-        @keyframes sparkPulse {
-            0%,100%{opacity:.5;transform:translateX(-50%) scale(1)}
-            50%{opacity:1;transform:translateX(-50%) scale(1.5);box-shadow:0 0 12px 3px rgba(239,68,68,1)}
-        }
     </style>
 </head>
 <body>
@@ -512,7 +492,7 @@
 <header id="hdr">
     <a class="nav-logo" href="#about" onclick="ss('about');return false;">
         <img src="favicon.png?v=4" alt="Z" onerror="this.style.display='none'">
-        
+        ZYLITEE
     </a>
     <nav>
         <a href="#about"   onclick="ss('about');   return false;">About</a>
@@ -550,7 +530,30 @@
         <div class="avatar-wrapper">
             <div class="av-corona"></div>
             <div class="av-glow"></div>
-            <div class="av-hex-border"></div>
+            <svg class="av-hex-ring" viewBox="0 0 182 182" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#ef4444"/>
+                        <stop offset="30%"  stop-color="#ff9a3c"/>
+                        <stop offset="60%"  stop-color="#ef4444"/>
+                        <stop offset="100%" stop-color="#b00000"/>
+                    </linearGradient>
+                </defs>
+                <!-- Soft outer glow stroke -->
+                <polygon points="91,5 172,48.5 172,133.5 91,177 10,133.5 10,48.5"
+                    fill="none" stroke="#ef4444" stroke-width="8" stroke-opacity="0.18"/>
+                <!-- Main dashed hex border -->
+                <polygon points="91,5 172,48.5 172,133.5 91,177 10,133.5 10,48.5"
+                    fill="none" stroke="url(#hexGrad)" stroke-width="2.5"
+                    stroke-dasharray="14 5" stroke-linecap="round"/>
+                <!-- Vertex accent dots — NO fill inside them, just small glowing circles -->
+                <circle cx="91"  cy="5"     r="3.5" fill="#ef4444"/>
+                <circle cx="172" cy="48.5"  r="3.5" fill="#ff9a3c"/>
+                <circle cx="172" cy="133.5" r="3.5" fill="#ef4444"/>
+                <circle cx="91"  cy="177"   r="3.5" fill="#ff9a3c"/>
+                <circle cx="10"  cy="133.5" r="3.5" fill="#ef4444"/>
+                <circle cx="10"  cy="48.5"  r="3.5" fill="#ff9a3c"/>
+            </svg>
             <img src="https://github.com/ZYLITEE.png" alt="Zylitee" class="av-img">
         </div>
     </div>
@@ -786,51 +789,17 @@ function ss(id){
 }
 addEventListener('scroll',()=>document.getElementById('hdr').classList.toggle('scrolled',scrollY>20));
 
-
-// ═══ TYPEWRITER (FIXED) ═══
+// ═══ TYPEWRITER ═══
 const twEl=document.getElementById('typewriter');
-
-const words=[
-"Hey, I'm Zylitee.",
-"Roblox Scripter & Builder.",
-"Let's build something great."
-];
-
-let wi=0;
-let ci=0;
-let deleting=false;
-
+const words=["Hey, I'm Zylitee.","Roblox Scripter & Builder.","Let's build something great."];
+let wi=0,ci=0,del=false;
 function type(){
-
-    const word=words[wi];
-
-    if(!deleting){
-        ci++;
-
-        if(ci>=word.length){
-            deleting=true;
-            twEl.textContent=word;
-            setTimeout(type,1800);
-            return;
-        }
-
-    }else{
-
-        ci--;
-
-        if(ci<=0){
-            deleting=false;
-            wi=(wi+1)%words.length;
-        }
-    }
-
-    twEl.textContent=word.substring(0,ci);
-
-    setTimeout(type,deleting?45:85);
+    const w=words[wi]; twEl.textContent=del?w.slice(0,ci--):w.slice(0,ci++);
+    if(!del&&ci>w.length){ del=true; setTimeout(type,2000); }
+    else if(del&&ci<0){ del=false; wi=(wi+1)%words.length; setTimeout(type,450); }
+    else setTimeout(type,del?40:90);
 }
-
 type();
-
 
 // ═══ SPOTLIGHT ═══
 document.querySelectorAll('.sp').forEach(el=>{
@@ -841,251 +810,156 @@ document.querySelectorAll('.sp').forEach(el=>{
     });
 });
 
-
-// ═══ 3D TILT ═══
+// ═══ 3D TILT on all game cards ═══
 document.querySelectorAll('.game-card').forEach(c=>{
     c.addEventListener('mousemove',e=>{
         const r=c.getBoundingClientRect();
         const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
         const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
-        c.style.transform=`perspective(900px) rotateY(${dx*7}deg) rotateX(${-dy*6}deg) translateY(-8px) scale(1.02)`;
+        c.style.transform=`perspective(900px) rotateY(${dx*7}deg) rotateX(${-dy*6}deg) translateY(-8px) scale(1.025)`;
     });
-    c.addEventListener('mouseleave',()=>c.style.transform='');
+    c.addEventListener('mouseleave',()=>{
+        c.style.transform='';
+    });
 });
 
-
-// ═══ STARS SYSTEM (UPDATED) ═══
+// ═══ STARS ═══
 const cv=document.getElementById('star-canvas'), cx=cv.getContext('2d');
 let W,H,stars=[],shooters=[];
 
 function resize(){ W=cv.width=innerWidth; H=cv.height=innerHeight; }
-resize();
-addEventListener('resize',()=>{ resize(); buildStars(); });
+resize(); addEventListener('resize',()=>{ resize(); buildStars(); });
 
-const STAR_COLORS=['#ffffff','#ffffff','#ffffff','#cce0ff','#ffd6a5','#ffb3b3','#e0ccff'];
+// Color palette for stars: white, blue-white, faint gold, faint pink
+const STAR_COLORS = ['#ffffff','#ffffff','#ffffff','#cce0ff','#ffd6a5','#ffb3b3','#e0ccff'];
 
-class Star{
-
-    constructor(){
-        this.spawn();
-    }
-
+class Star {
+    constructor(){ this.life=Math.random(); this.spawn(); }
     spawn(){
-
-        this.x=Math.random()*W;
-        this.y=Math.random()*H;
-
+        this.x=Math.random()*W; this.y=Math.random()*H;
         this.red=Math.random()<.055;
-
-        this.sz=this.red?Math.random()*2.5+1.6:Math.random()*1.2+0.2;
-
-        this.col=this.red?'#ef4444':STAR_COLORS[Math.floor(Math.random()*STAR_COLORS.length)];
-
-        this.life=0;
-        this.lifeMax=Math.random()*6000+4000;
-
-        this.twinkleSpeed=Math.random()*0.002+0.001;
-        this.twinkleOffset=Math.random()*Math.PI*2;
-
-        this.alpha=Math.random()*0.5+0.3;
+        // slower twinkle — much longer periods
+        this.sz = this.red ? Math.random()*2.5+1.6 : Math.random()*1.2+0.2;
+        this.baseA = Math.random()*.55+0.15;
+        this.twOff = Math.random()*Math.PI*2;
+        // MUCH slower twinkle: 0.003–0.008 range (was 0.006–0.029)
+        this.twSpd = Math.random()*0.005+0.002;
+        this.lSpd  = Math.random()*0.0005+0.0001; // slower life cycle too
+        this.rot   = Math.random()*Math.PI*2;
+        this.rSpd  = (Math.random()-.5)*0.004;
+        this.col   = STAR_COLORS[Math.floor(Math.random()*STAR_COLORS.length)];
     }
-
-    update(t,dt){
-
-        const tw=Math.sin(t*this.twinkleSpeed+this.twinkleOffset)*0.5+0.5;
-
-        this.alpha=0.15+tw*0.65;
-
-        this.life+=dt*1000;
-
-        if(this.life>this.lifeMax){
-            this.spawn();
-        }
+    update(t){
+        this.life+=this.lSpd;
+        if(this.life>1){ this.spawn(); this.life=0; }
+        const p=this.life;
+        const env=p<.12?p/.12:p<.78?1:1-(p-.78)/.22;
+        const tw=Math.sin(t*this.twSpd*60+this.twOff)*.5+.5;
+        this.alpha=this.baseA*env*(.5+.5*tw);
+        if(this.red)this.rot+=this.rSpd;
     }
-
     draw(){
-
-        if(this.alpha<=0.01)return;
-
-        cx.save();
-        cx.globalAlpha=this.alpha;
-        cx.translate(this.x,this.y);
-
+        if(this.alpha<=.015)return;
+        cx.save(); cx.globalAlpha=this.alpha; cx.translate(this.x,this.y);
         if(this.red){
-
-            cx.shadowBlur=12;
-            cx.shadowColor='#ef4444';
+            cx.rotate(this.rot);
+            cx.shadowBlur=12; cx.shadowColor='#ef4444';
             cx.fillStyle='#ef4444';
-
             const s=this.sz;
-
             cx.beginPath();
-            cx.moveTo(0,-s*2);
-            cx.lineTo(s*0.6,0);
-            cx.lineTo(0,s*2);
-            cx.lineTo(-s*0.6,0);
-            cx.closePath();
-            cx.fill();
-
-        }else{
-
-            cx.shadowBlur=4;
-            cx.shadowColor=this.col;
+            for(let i=0;i<8;i++){
+                const a=i*Math.PI/4, r=i%2===0?s:s*.38;
+                i===0?cx.moveTo(Math.cos(a)*r,Math.sin(a)*r):cx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
+            }
+            cx.closePath(); cx.fill();
+            cx.shadowBlur=4; cx.fillStyle='#ffcccc';
+            cx.beginPath(); cx.arc(0,0,s*.18,0,Math.PI*2); cx.fill();
+        } else {
+            cx.shadowBlur=this.sz>0.9?4:1.5; cx.shadowColor=this.col;
             cx.fillStyle=this.col;
-
-            cx.beginPath();
-            cx.arc(0,0,this.sz,0,Math.PI*2);
-            cx.fill();
+            cx.beginPath(); cx.arc(0,0,this.sz,0,Math.PI*2); cx.fill();
+            // Diffraction cross for bigger stars
+            if(this.sz>0.85&&this.alpha>.3){
+                cx.globalAlpha=this.alpha*.2;
+                cx.strokeStyle=this.col; cx.lineWidth=.45;
+                const sp=this.sz*2.4;
+                cx.beginPath(); cx.moveTo(-sp,0); cx.lineTo(sp,0);
+                cx.moveTo(0,-sp); cx.lineTo(0,sp); cx.stroke();
+            }
         }
-
         cx.restore();
     }
 }
 
-
-// ═══ SHOOTING STARS (UNCHANGED BUT CLEANED) ═══
-class Shooter{
-
-    constructor(){
-        this.active=false;
-        this.timer=Math.random()*7+3;
-    }
-
+class Shooter {
+    constructor(){ this.active=false; this.timer=Math.random()*7+3; }
     fire(){
-
+        // Start right side or top-right — going left+down like real meteors
         if(Math.random()>.3){
-            this.x=W*0.6+Math.random()*W*0.6;
-            this.y=Math.random()*H*.3-20;
-        }else{
-            this.x=W+20;
-            this.y=Math.random()*H*.4-10;
+            this.x=W*0.6+Math.random()*W*0.6; this.y=Math.random()*H*.3-20;
+        } else {
+            this.x=W+20; this.y=Math.random()*H*.4-10;
         }
-
-        const ang=Math.PI*0.62+(Math.random()-.5)*(Math.PI/7);
+        const ang=Math.PI*0.62+(Math.random()-.5)*(Math.PI/7); // ~35-55 deg diagonal
         const spd=Math.random()*480+320;
-
-        this.vx=-Math.cos(ang)*spd;
-        this.vy=Math.sin(ang)*spd;
-
+        this.vx=-Math.cos(ang)*spd; this.vy=Math.sin(ang)*spd;
         this.len=Math.random()*200+80;
         this.life=0;
-
+        // Travel time = enough to cross entire screen smoothly, no premature despawn
         const screenDiag=Math.sqrt(W*W+H*H);
-        this.dur=screenDiag/spd*0.85;
-
+        this.dur=screenDiag/spd*0.85; // ensure full visible arc
         this.w=Math.random()*1.3+0.45;
-
         this.active=true;
     }
-
     update(dt){
-
         this.timer-=dt;
-
-        if(this.timer<=0&&!this.active){
-            this.fire();
-            this.timer=Math.random()*9+4;
-        }
-
+        if(this.timer<=0&&!this.active){ this.fire(); this.timer=Math.random()*9+4; }
         if(!this.active)return;
-
-        this.life+=dt;
-
-        this.x+=this.vx*dt;
-        this.y+=this.vy*dt;
-
+        this.life+=dt; this.x+=this.vx*dt; this.y+=this.vy*dt;
+        // Fade in quickly, hold, fade out near end — but only fade when approaching screen edge
         const t=this.life/this.dur;
-
-        if(t<.06)this.alpha=t/.06;
-        else if(t>.8)this.alpha=1-(t-.8)/.2;
+        const offscreen=(this.x<-100||this.x>W+100||this.y<-100||this.y>H+100);
+        if(t<.06) this.alpha=t/.06;
+        else if(t>.8) this.alpha=1-(t-.8)/.2;
         else this.alpha=1;
-
-        if(this.life>=this.dur||
-           this.x<-100||this.x>W+100||
-           this.y<-100||this.y>H+100)
-        this.active=false;
+        if(this.life>=this.dur||offscreen) this.active=false;
     }
-
     draw(){
-
         if(!this.active||this.alpha<=0)return;
-
         const ang=Math.atan2(this.vy,this.vx);
-
-        const tx=this.x-Math.cos(ang)*this.len;
-        const ty=this.y-Math.sin(ang)*this.len;
-
+        const tx=this.x-Math.cos(ang)*this.len, ty=this.y-Math.sin(ang)*this.len;
         cx.save();
-
         const g=cx.createLinearGradient(tx,ty,this.x,this.y);
         g.addColorStop(0,'rgba(0,0,0,0)');
         g.addColorStop(.6,`rgba(255,255,255,${this.alpha*.25})`);
         g.addColorStop(1,`rgba(255,255,255,${this.alpha})`);
-
-        cx.strokeStyle=g;
-        cx.lineWidth=this.w;
-
-        cx.shadowBlur=7;
-        cx.shadowColor='#fff';
-
-        cx.beginPath();
-        cx.moveTo(tx,ty);
-        cx.lineTo(this.x,this.y);
-        cx.stroke();
-
+        cx.strokeStyle=g; cx.lineWidth=this.w;
+        cx.shadowBlur=7; cx.shadowColor='#fff';
+        cx.beginPath(); cx.moveTo(tx,ty); cx.lineTo(this.x,this.y); cx.stroke();
+        // Bright tip
         cx.fillStyle=`rgba(255,255,255,${this.alpha})`;
-
-        cx.shadowBlur=12;
-        cx.shadowColor='#fff';
-
-        cx.beginPath();
-        cx.arc(this.x,this.y,this.w+.5,0,Math.PI*2);
-        cx.fill();
-
+        cx.shadowBlur=12; cx.shadowColor='#fff';
+        cx.beginPath(); cx.arc(this.x,this.y,this.w+.5,0,Math.PI*2); cx.fill();
         cx.restore();
     }
 }
 
-
-// BUILD STARS
 function buildStars(){
-
     stars=[];
-
-    const n=Math.floor(W*H/2600);
-
-    for(let i=0;i<n;i++){
-        stars.push(new Star());
-    }
+    const n=Math.floor(W*H/3500);
+    for(let i=0;i<n;i++){ const s=new Star(); s.life=Math.random(); stars.push(s); }
 }
-
-for(let i=0;i<4;i++)shooters.push(new Shooter());
-
+for(let i=0;i<4;i++) shooters.push(new Shooter());
 buildStars();
 
 let last=0;
-
 (function loop(ts){
-
-    const dt=Math.min((ts-last)/1000,.05);
-    last=ts;
-
+    const dt=Math.min((ts-last)/1000,.05); last=ts;
     cx.clearRect(0,0,W,H);
-
-    stars.forEach(s=>{
-        s.update(ts,dt);
-        s.draw();
-    });
-
-    shooters.forEach(s=>{
-        s.update(dt);
-        s.draw();
-    });
-
+    stars.forEach(s=>{ s.update(ts); s.draw(); });
+    shooters.forEach(s=>{ s.update(dt); s.draw(); });
     requestAnimationFrame(loop);
-
 })(0);
-
 
 // ═══ REVEAL ═══
 const obs=new IntersectionObserver(e=>e.forEach(x=>x.target.classList.toggle('active',x.isIntersecting)),{threshold:.07});
