@@ -91,15 +91,12 @@
 
         /* Favicon logo left */
         .nav-logo {
-            display: flex; align-items: center; gap: 9px;
+            display: flex; align-items: center;
             text-decoration: none;
-            font-family: 'Syne', sans-serif;
-            font-weight: 800; font-size: 1.05rem;
-            color: #fff; letter-spacing: 0.04em;
             transition: opacity 0.25s;
         }
-        .nav-logo img { width: 26px; height: 26px; border-radius: 5px; }
-        .nav-logo:hover { opacity: 0.75; }
+        .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+        .nav-logo:hover { opacity: 0.7; }
 
         nav { display: flex; align-items: center; gap: 4px; }
         nav a {
@@ -344,7 +341,8 @@
             text-decoration: none; display: block;
             position: relative; overflow: hidden;
             width: 300px; flex-shrink: 0; flex-grow: 1; max-width: 360px;
-            transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.35s, box-shadow 0.35s;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            will-change: transform;
         }
         .game-card:hover {
             border-color: var(--border-hover);
@@ -441,22 +439,29 @@
         }
         .reveal.active { opacity: 1; transform: none; filter: blur(0); }
 
+        /* Stagger: each child gets an animation-based fade-in so it doesn't conflict with hover transforms */
         .sg > * {
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+            animation: sgHide 0s forwards;
         }
-        .sg.active > *:nth-child(1)  { opacity:1;transform:none;transition-delay:.03s }
-        .sg.active > *:nth-child(2)  { opacity:1;transform:none;transition-delay:.07s }
-        .sg.active > *:nth-child(3)  { opacity:1;transform:none;transition-delay:.11s }
-        .sg.active > *:nth-child(4)  { opacity:1;transform:none;transition-delay:.15s }
-        .sg.active > *:nth-child(5)  { opacity:1;transform:none;transition-delay:.19s }
-        .sg.active > *:nth-child(6)  { opacity:1;transform:none;transition-delay:.23s }
-        .sg.active > *:nth-child(7)  { opacity:1;transform:none;transition-delay:.27s }
-        .sg.active > *:nth-child(8)  { opacity:1;transform:none;transition-delay:.31s }
-        .sg.active > *:nth-child(9)  { opacity:1;transform:none;transition-delay:.35s }
-        .sg.active > *:nth-child(10) { opacity:1;transform:none;transition-delay:.39s }
-        .sg.active > *:nth-child(11) { opacity:1;transform:none;transition-delay:.43s }
-        .sg.active > *:nth-child(n+12){opacity:1;transform:none;transition-delay:.47s }
+        @keyframes sgHide { to { opacity: 0; transform: translateY(20px); } }
+
+        .sg.active > *:nth-child(1)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.03s forwards; }
+        .sg.active > *:nth-child(2)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.07s forwards; }
+        .sg.active > *:nth-child(3)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.11s forwards; }
+        .sg.active > *:nth-child(4)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.15s forwards; }
+        .sg.active > *:nth-child(5)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.19s forwards; }
+        .sg.active > *:nth-child(6)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.23s forwards; }
+        .sg.active > *:nth-child(7)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.27s forwards; }
+        .sg.active > *:nth-child(8)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.31s forwards; }
+        .sg.active > *:nth-child(9)  { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.35s forwards; }
+        .sg.active > *:nth-child(10) { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.39s forwards; }
+        .sg.active > *:nth-child(11) { animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.43s forwards; }
+        .sg.active > *:nth-child(n+12){ animation: sgIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.47s forwards; }
+
+        @keyframes sgIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
 
         /* ═══════════════════════════════
            KEYFRAMES
@@ -492,7 +497,6 @@
 <header id="hdr">
     <a class="nav-logo" href="#about" onclick="ss('about');return false;">
         <img src="favicon.png?v=4" alt="Z" onerror="this.style.display='none'">
-        ZYLITEE
     </a>
     <nav>
         <a href="#about"   onclick="ss('about');   return false;">About</a>
@@ -790,16 +794,38 @@ function ss(id){
 addEventListener('scroll',()=>document.getElementById('hdr').classList.toggle('scrolled',scrollY>20));
 
 // ═══ TYPEWRITER ═══
-const twEl=document.getElementById('typewriter');
-const words=["Hey, I'm Zylitee.","Roblox Scripter & Builder.","Let's build something great."];
-let wi=0,ci=0,del=false;
-function type(){
-    const w=words[wi]; twEl.textContent=del?w.slice(0,ci--):w.slice(0,ci++);
-    if(!del&&ci>w.length){ del=true; setTimeout(type,2000); }
-    else if(del&&ci<0){ del=false; wi=(wi+1)%words.length; setTimeout(type,450); }
-    else setTimeout(type,del?40:90);
+const twEl = document.getElementById('typewriter');
+const words = ["Hey, I'm Zylitee.", "Roblox Scripter & Builder.", "Let's build something great."];
+let twWord = 0, twChar = 0, twDeleting = false, twTimeout = null;
+
+function typeStep() {
+    const word = words[twWord];
+    if (!twDeleting) {
+        // Typing forward
+        twChar++;
+        twEl.textContent = word.slice(0, twChar);
+        if (twChar >= word.length) {
+            // Fully typed — pause then start deleting
+            twDeleting = true;
+            twTimeout = setTimeout(typeStep, 2200);
+            return;
+        }
+        twTimeout = setTimeout(typeStep, 95);
+    } else {
+        // Deleting
+        twChar--;
+        twEl.textContent = word.slice(0, twChar);
+        if (twChar <= 0) {
+            // Fully deleted — move to next word
+            twDeleting = false;
+            twWord = (twWord + 1) % words.length;
+            twTimeout = setTimeout(typeStep, 420);
+            return;
+        }
+        twTimeout = setTimeout(typeStep, 42);
+    }
 }
-type();
+typeStep();
 
 // ═══ SPOTLIGHT ═══
 document.querySelectorAll('.sp').forEach(el=>{
@@ -810,81 +836,168 @@ document.querySelectorAll('.sp').forEach(el=>{
     });
 });
 
-// ═══ 3D TILT on all game cards ═══
-document.querySelectorAll('.game-card').forEach(c=>{
-    c.addEventListener('mousemove',e=>{
-        const r=c.getBoundingClientRect();
-        const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
-        const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
-        c.style.transform=`perspective(900px) rotateY(${dx*7}deg) rotateX(${-dy*6}deg) translateY(-8px) scale(1.025)`;
+// ═══ 3D TILT on all game cards — immediate response ═══
+document.querySelectorAll('.game-card').forEach(card => {
+    let rafId = null;
+    let targetRX = 0, targetRY = 0, curRX = 0, curRY = 0;
+    let hovering = false;
+
+    card.addEventListener('mouseenter', () => { hovering = true; });
+
+    card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+        const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+        targetRY =  dx * 8;
+        targetRX = -dy * 6;
+        if (!rafId) animate();
     });
-    c.addEventListener('mouseleave',()=>{
-        c.style.transform='';
+
+    card.addEventListener('mouseleave', () => {
+        hovering = false;
+        targetRX = 0; targetRY = 0;
+        if (!rafId) animate();
     });
+
+    function animate() {
+        // Lerp current toward target
+        const spd = hovering ? 0.25 : 0.12;
+        curRX += (targetRX - curRX) * spd;
+        curRY += (targetRY - curRY) * spd;
+
+        const lift = hovering ? -8 : 0;
+        const sc   = hovering ? 1.025 : 1;
+
+        card.style.transform = `perspective(900px) rotateX(${curRX}deg) rotateY(${curRY}deg) translateY(${lift}px) scale(${sc})`;
+
+        const done = Math.abs(curRX - targetRX) < 0.01 && Math.abs(curRY - targetRY) < 0.01;
+        if (done) {
+            if (!hovering) card.style.transform = '';
+            rafId = null;
+        } else {
+            rafId = requestAnimationFrame(animate);
+        }
+    }
 });
 
 // ═══ STARS ═══
-const cv=document.getElementById('star-canvas'), cx=cv.getContext('2d');
-let W,H,stars=[],shooters=[];
+const cv = document.getElementById('star-canvas'), cx = cv.getContext('2d');
+let W, H, stars = [], shooters = [];
 
-function resize(){ W=cv.width=innerWidth; H=cv.height=innerHeight; }
-resize(); addEventListener('resize',()=>{ resize(); buildStars(); });
+function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+resize();
+addEventListener('resize', () => { resize(); buildStars(); });
 
-// Color palette for stars: white, blue-white, faint gold, faint pink
-const STAR_COLORS = ['#ffffff','#ffffff','#ffffff','#cce0ff','#ffd6a5','#ffb3b3','#e0ccff'];
+const WHITE_COLS = ['#ffffff','#ffffff','#ffffff','#d6eaff','#ffe8cc','#ffd0d0','#e8d6ff'];
+
+// Draw a 4-pointed star (like the reference image) using cubic bezier curves
+// The classic 4-point star has 4 sharp tips with concave sides
+function draw4Star(ctx, size) {
+    // Uses the "astroid" / 4-point star shape with concave inward curves
+    const o = size * 0.18; // inner control point offset
+    ctx.beginPath();
+    // Top tip
+    ctx.moveTo(0, -size);
+    ctx.bezierCurveTo( o, -o,  o, -o,  size,  0);  // right tip
+    ctx.bezierCurveTo( o,  o,  o,  o,  0,  size);  // bottom tip
+    ctx.bezierCurveTo(-o,  o, -o,  o, -size,  0);  // left tip
+    ctx.bezierCurveTo(-o, -o, -o, -o,  0, -size);  // back to top
+    ctx.closePath();
+}
 
 class Star {
-    constructor(){ this.life=Math.random(); this.spawn(); }
-    spawn(){
-        this.x=Math.random()*W; this.y=Math.random()*H;
-        this.red=Math.random()<.055;
-        // slower twinkle — much longer periods
-        this.sz = this.red ? Math.random()*2.5+1.6 : Math.random()*1.2+0.2;
-        this.baseA = Math.random()*.55+0.15;
-        this.twOff = Math.random()*Math.PI*2;
-        // MUCH slower twinkle: 0.003–0.008 range (was 0.006–0.029)
-        this.twSpd = Math.random()*0.005+0.002;
-        this.lSpd  = Math.random()*0.0005+0.0001; // slower life cycle too
-        this.rot   = Math.random()*Math.PI*2;
-        this.rSpd  = (Math.random()-.5)*0.004;
-        this.col   = STAR_COLORS[Math.floor(Math.random()*STAR_COLORS.length)];
+    constructor() {
+        this.life = Math.random(); // stagger start positions
+        this.x = Math.random() * (W || innerWidth);
+        this.y = Math.random() * (H || innerHeight);
+        this.init();
     }
-    update(t){
-        this.life+=this.lSpd;
-        if(this.life>1){ this.spawn(); this.life=0; }
-        const p=this.life;
-        const env=p<.12?p/.12:p<.78?1:1-(p-.78)/.22;
-        const tw=Math.sin(t*this.twSpd*60+this.twOff)*.5+.5;
-        this.alpha=this.baseA*env*(.5+.5*tw);
-        if(this.red)this.rot+=this.rSpd;
-    }
-    draw(){
-        if(this.alpha<=.015)return;
-        cx.save(); cx.globalAlpha=this.alpha; cx.translate(this.x,this.y);
-        if(this.red){
-            cx.rotate(this.rot);
-            cx.shadowBlur=12; cx.shadowColor='#ef4444';
-            cx.fillStyle='#ef4444';
-            const s=this.sz;
-            cx.beginPath();
-            for(let i=0;i<8;i++){
-                const a=i*Math.PI/4, r=i%2===0?s:s*.38;
-                i===0?cx.moveTo(Math.cos(a)*r,Math.sin(a)*r):cx.lineTo(Math.cos(a)*r,Math.sin(a)*r);
-            }
-            cx.closePath(); cx.fill();
-            cx.shadowBlur=4; cx.fillStyle='#ffcccc';
-            cx.beginPath(); cx.arc(0,0,s*.18,0,Math.PI*2); cx.fill();
+
+    init() {
+        this.red = Math.random() < 0.06;
+        if (this.red) {
+            this.sz = Math.random() * 5 + 4;        // bigger: 4-9px
         } else {
-            cx.shadowBlur=this.sz>0.9?4:1.5; cx.shadowColor=this.col;
-            cx.fillStyle=this.col;
-            cx.beginPath(); cx.arc(0,0,this.sz,0,Math.PI*2); cx.fill();
-            // Diffraction cross for bigger stars
-            if(this.sz>0.85&&this.alpha>.3){
-                cx.globalAlpha=this.alpha*.2;
-                cx.strokeStyle=this.col; cx.lineWidth=.45;
-                const sp=this.sz*2.4;
-                cx.beginPath(); cx.moveTo(-sp,0); cx.lineTo(sp,0);
-                cx.moveTo(0,-sp); cx.lineTo(0,sp); cx.stroke();
+            this.sz = Math.random() * 1.4 + 0.3;    // tiny white dots
+        }
+        this.baseAlpha = Math.random() * 0.5 + 0.25;
+        this.col = WHITE_COLS[Math.floor(Math.random() * WHITE_COLS.length)];
+
+        // Life cycle: each star lives for a slow period, fades in, stays, fades out, then teleports
+        // Life speed: 0.00008–0.00022 per ms (very slow)
+        this.lSpd = Math.random() * 0.00014 + 0.00006;
+
+        // Twinkle: very slow sine wave layered ON TOP of the life envelope
+        // Period = 6–18 seconds  →  freq = 1/period in Hz  →  radians/ms = 2π/period/1000
+        const periodSec = Math.random() * 12 + 6;
+        this.twFreq = (2 * Math.PI) / (periodSec * 1000);
+        this.twOff = Math.random() * Math.PI * 2;
+        this.twAmt = Math.random() * 0.3 + 0.1; // how much twinkle varies alpha (10-40%)
+
+        this.rot = Math.random() * Math.PI * 2;
+        this.rSpd = (Math.random() - 0.5) * 0.0008; // very slow rotation
+    }
+
+    update(ms) {
+        this.life += this.lSpd;
+
+        if (this.life >= 1) {
+            // Teleport to new random position
+            this.x = Math.random() * W;
+            this.y = Math.random() * H;
+            this.life = 0;
+            this.init(); // re-randomize properties
+            return;
+        }
+
+        // Envelope: fade in [0,0.15], full [0.15,0.75], fade out [0.75,1.0]
+        let env;
+        if      (this.life < 0.15) env = this.life / 0.15;
+        else if (this.life < 0.75) env = 1;
+        else                       env = 1 - (this.life - 0.75) / 0.25;
+
+        // Slow twinkle sine layered on top
+        const tw = 1 - this.twAmt + this.twAmt * (Math.sin(ms * this.twFreq + this.twOff) * 0.5 + 0.5);
+
+        this.alpha = this.baseAlpha * env * tw;
+        if (this.red) this.rot += this.rSpd;
+    }
+
+    draw() {
+        if (this.alpha < 0.008) return;
+        cx.save();
+        cx.globalAlpha = this.alpha;
+        cx.translate(this.x, this.y);
+
+        if (this.red) {
+            cx.rotate(this.rot);
+            cx.shadowBlur = 18;
+            cx.shadowColor = '#ef4444';
+            cx.fillStyle = '#ef4444';
+            draw4Star(cx, this.sz);
+            cx.fill();
+            // Second pass for stronger glow
+            cx.shadowBlur = 8;
+            cx.globalAlpha = this.alpha * 0.5;
+            draw4Star(cx, this.sz * 1.15);
+            cx.fill();
+        } else {
+            cx.shadowBlur = this.sz > 0.8 ? 4 : 2;
+            cx.shadowColor = this.col;
+            cx.fillStyle = this.col;
+            cx.beginPath();
+            cx.arc(0, 0, this.sz, 0, Math.PI * 2);
+            cx.fill();
+            // Soft cross diffraction on brighter stars
+            if (this.sz > 0.9 && this.alpha > 0.35) {
+                cx.globalAlpha = this.alpha * 0.18;
+                cx.strokeStyle = this.col;
+                cx.lineWidth = 0.5;
+                const sp = this.sz * 2.8;
+                cx.beginPath();
+                cx.moveTo(-sp, 0); cx.lineTo(sp, 0);
+                cx.moveTo(0, -sp); cx.lineTo(0, sp);
+                cx.stroke();
             }
         }
         cx.restore();
@@ -892,72 +1005,81 @@ class Star {
 }
 
 class Shooter {
-    constructor(){ this.active=false; this.timer=Math.random()*7+3; }
-    fire(){
-        // Start right side or top-right — going left+down like real meteors
-        if(Math.random()>.3){
-            this.x=W*0.6+Math.random()*W*0.6; this.y=Math.random()*H*.3-20;
+    constructor() { this.active = false; this.timer = Math.random() * 7 + 3; }
+
+    fire() {
+        if (Math.random() > 0.3) {
+            this.x = W * 0.55 + Math.random() * W * 0.6;
+            this.y = Math.random() * H * 0.35 - 20;
         } else {
-            this.x=W+20; this.y=Math.random()*H*.4-10;
+            this.x = W + 20;
+            this.y = Math.random() * H * 0.45 - 10;
         }
-        const ang=Math.PI*0.62+(Math.random()-.5)*(Math.PI/7); // ~35-55 deg diagonal
-        const spd=Math.random()*480+320;
-        this.vx=-Math.cos(ang)*spd; this.vy=Math.sin(ang)*spd;
-        this.len=Math.random()*200+80;
-        this.life=0;
-        // Travel time = enough to cross entire screen smoothly, no premature despawn
-        const screenDiag=Math.sqrt(W*W+H*H);
-        this.dur=screenDiag/spd*0.85; // ensure full visible arc
-        this.w=Math.random()*1.3+0.45;
-        this.active=true;
+        const ang = Math.PI * 0.62 + (Math.random() - 0.5) * (Math.PI / 7);
+        const spd = Math.random() * 480 + 320;
+        this.vx = -Math.cos(ang) * spd;
+        this.vy =  Math.sin(ang) * spd;
+        this.len = Math.random() * 200 + 80;
+        this.life = 0;
+        const diag = Math.sqrt(W * W + H * H);
+        this.dur = diag / spd * 0.88;
+        this.w = Math.random() * 1.3 + 0.45;
+        this.active = true;
     }
-    update(dt){
-        this.timer-=dt;
-        if(this.timer<=0&&!this.active){ this.fire(); this.timer=Math.random()*9+4; }
-        if(!this.active)return;
-        this.life+=dt; this.x+=this.vx*dt; this.y+=this.vy*dt;
-        // Fade in quickly, hold, fade out near end — but only fade when approaching screen edge
-        const t=this.life/this.dur;
-        const offscreen=(this.x<-100||this.x>W+100||this.y<-100||this.y>H+100);
-        if(t<.06) this.alpha=t/.06;
-        else if(t>.8) this.alpha=1-(t-.8)/.2;
-        else this.alpha=1;
-        if(this.life>=this.dur||offscreen) this.active=false;
+
+    update(dt) {
+        this.timer -= dt;
+        if (this.timer <= 0 && !this.active) { this.fire(); this.timer = Math.random() * 9 + 4; }
+        if (!this.active) return;
+        this.life += dt;
+        this.x += this.vx * dt;
+        this.y += this.vy * dt;
+        const t = this.life / this.dur;
+        const offscreen = this.x < -150 || this.x > W + 150 || this.y < -150 || this.y > H + 150;
+        this.alpha = t < 0.06 ? t / 0.06 : t > 0.78 ? 1 - (t - 0.78) / 0.22 : 1;
+        if (this.life >= this.dur || offscreen) this.active = false;
     }
-    draw(){
-        if(!this.active||this.alpha<=0)return;
-        const ang=Math.atan2(this.vy,this.vx);
-        const tx=this.x-Math.cos(ang)*this.len, ty=this.y-Math.sin(ang)*this.len;
+
+    draw() {
+        if (!this.active || this.alpha <= 0) return;
+        const ang = Math.atan2(this.vy, this.vx);
+        const tx = this.x - Math.cos(ang) * this.len;
+        const ty = this.y - Math.sin(ang) * this.len;
         cx.save();
-        const g=cx.createLinearGradient(tx,ty,this.x,this.y);
-        g.addColorStop(0,'rgba(0,0,0,0)');
-        g.addColorStop(.6,`rgba(255,255,255,${this.alpha*.25})`);
-        g.addColorStop(1,`rgba(255,255,255,${this.alpha})`);
-        cx.strokeStyle=g; cx.lineWidth=this.w;
-        cx.shadowBlur=7; cx.shadowColor='#fff';
-        cx.beginPath(); cx.moveTo(tx,ty); cx.lineTo(this.x,this.y); cx.stroke();
-        // Bright tip
-        cx.fillStyle=`rgba(255,255,255,${this.alpha})`;
-        cx.shadowBlur=12; cx.shadowColor='#fff';
-        cx.beginPath(); cx.arc(this.x,this.y,this.w+.5,0,Math.PI*2); cx.fill();
+        const g = cx.createLinearGradient(tx, ty, this.x, this.y);
+        g.addColorStop(0,   'rgba(0,0,0,0)');
+        g.addColorStop(0.6, `rgba(255,255,255,${this.alpha * 0.25})`);
+        g.addColorStop(1,   `rgba(255,255,255,${this.alpha})`);
+        cx.strokeStyle = g; cx.lineWidth = this.w;
+        cx.shadowBlur = 7; cx.shadowColor = '#fff';
+        cx.beginPath(); cx.moveTo(tx, ty); cx.lineTo(this.x, this.y); cx.stroke();
+        cx.fillStyle = `rgba(255,255,255,${this.alpha})`;
+        cx.shadowBlur = 13;
+        cx.beginPath(); cx.arc(this.x, this.y, this.w + 0.5, 0, Math.PI * 2); cx.fill();
         cx.restore();
     }
 }
 
-function buildStars(){
-    stars=[];
-    const n=Math.floor(W*H/3500);
-    for(let i=0;i<n;i++){ const s=new Star(); s.life=Math.random(); stars.push(s); }
+function buildStars() {
+    stars = [];
+    const n = Math.floor(W * H / 3200);
+    for (let i = 0; i < n; i++) {
+        const s = new Star();
+        s.life = Math.random(); // spread out life phases
+        stars.push(s);
+    }
 }
-for(let i=0;i<4;i++) shooters.push(new Shooter());
+
+for (let i = 0; i < 4; i++) shooters.push(new Shooter());
 buildStars();
 
-let last=0;
-(function loop(ts){
-    const dt=Math.min((ts-last)/1000,.05); last=ts;
-    cx.clearRect(0,0,W,H);
-    stars.forEach(s=>{ s.update(ts); s.draw(); });
-    shooters.forEach(s=>{ s.update(dt); s.draw(); });
+let last = 0;
+(function loop(ts) {
+    const dt = Math.min((ts - last) / 1000, 0.05);
+    last = ts;
+    cx.clearRect(0, 0, W, H);
+    stars.forEach(s => { s.update(ts); s.draw(); });
+    shooters.forEach(s => { s.update(dt); s.draw(); });
     requestAnimationFrame(loop);
 })(0);
 
